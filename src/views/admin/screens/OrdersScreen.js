@@ -72,7 +72,7 @@ const OrdersScreen = () => {
     <Layout>
       <PageHeader title="Orders List" />
       
-      <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={calncelLoading || changeStatusLoading}>
+      <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={Boolean(calncelLoading || changeStatusLoading)}>
         <CircularProgress color="inherit" />
       </Backdrop>
 

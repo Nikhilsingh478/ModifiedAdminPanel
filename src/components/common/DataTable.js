@@ -36,7 +36,9 @@ const DataTable = ({ columns, data, renderCell, loading }) => {
                 <TableRow
                   hover
                   key={row.id || rowIndex}
-                  sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+                  sx={{ 
+                    "&:last-child td, &:last-child th": { border: 0 },
+                  }}
                 >
                   {columns.map((col, colIndex) => (
                     <TableCell key={colIndex}>

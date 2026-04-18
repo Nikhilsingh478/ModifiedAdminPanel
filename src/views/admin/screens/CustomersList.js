@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { circularProgressClasses, Box, Dialog, CircularProgress } from "@mui/material";
+import { circularProgressClasses, Box, Dialog, CircularProgress, OutlinedInput } from "@mui/material";
 import toast, { Toaster } from "react-hot-toast";
 import {
   customerList,
@@ -85,11 +85,11 @@ const CustomersList = () => {
       <PageHeader 
         title="Customers List" 
         actionButton={
-          <input 
-            type="text" 
+          <OutlinedInput 
+            size="small"
             placeholder="Search User..." 
             onChange={(e) => setSearch(e.target.value)} 
-            style={{ padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }}
+            sx={{ width: '250px' }}
           />
         } 
       />

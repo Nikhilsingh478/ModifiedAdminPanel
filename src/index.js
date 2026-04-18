@@ -7,10 +7,16 @@ import App from './App';
 
 
 
+import { CustomThemeProvider } from './ThemeContext';
+import { CssBaseline } from '@mui/material';
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <Provider store={store}>
-    <App />
+    <CustomThemeProvider>
+      <CssBaseline />
+      <App />
+    </CustomThemeProvider>
   </Provider>
 );
 

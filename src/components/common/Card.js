@@ -6,8 +6,8 @@ const Card = ({ children, sx, ...props }) => {
     <Paper 
       elevation={1} 
       sx={{ 
-        p: 2, 
-        borderRadius: 2, 
+        p: 3, 
+        borderRadius: '12px', 
         ...sx 
       }} 
       {...props}
