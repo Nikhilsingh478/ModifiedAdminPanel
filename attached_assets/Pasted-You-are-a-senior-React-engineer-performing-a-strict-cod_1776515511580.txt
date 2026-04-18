@@ -1,0 +1,132 @@
+You are a senior React engineer performing a strict codebase cleanup and stabilization pass on an existing Create React App admin panel.
+
+Your goal is to eliminate ALL lint warnings, fix bad patterns, and make the codebase clean, predictable, and maintainable BEFORE any UI redesign.
+
+DO NOT redesign UI. DO NOT change business logic. ONLY clean and fix code quality issues.
+
+---
+
+## PRIMARY OBJECTIVE
+
+Fix all ESLint warnings and structural issues across the project, including:
+
+* Unused imports
+* Unused variables
+* Incorrect React Hook dependencies
+* Missing alt attributes in img tags
+* Redundant or dead code blocks
+
+The code must compile with ZERO warnings.
+
+---
+
+## RULES (STRICT)
+
+* DO NOT disable eslint rules
+* DO NOT use // eslint-disable-next-line
+* DO NOT break existing functionality
+* DO NOT refactor UI or styling yet
+* DO NOT rename files unnecessarily
+* ONLY clean and stabilize code
+
+---
+
+## TASKS
+
+### 1. REMOVE UNUSED IMPORTS AND VARIABLES
+
+Across ALL files:
+
+* Remove imports that are not used (e.g., Button, Typography, axios, etc.)
+* Remove unused variables and state
+* Remove unused functions
+
+Example:
+
+BAD:
+import { Button } from "@mui/material";
+
+GOOD:
+(remove it completely if unused)
+
+---
+
+### 2. FIX REACT HOOK DEPENDENCIES
+
+For ALL useEffect hooks:
+
+* Add ALL required dependencies to dependency array
+* If adding dependencies causes re-renders, fix properly using:
+
+  * useCallback
+  * useMemo
+
+DO NOT ignore warnings.
+
+BAD:
+useEffect(() => {
+fetchData();
+}, []);
+
+GOOD:
+useEffect(() => {
+fetchData();
+}, [fetchData]);
+
+OR memoize fetchData if needed.
+
+---
+
+### 3. FIX MISSING ALT ATTRIBUTES
+
+For ALL img tags:
+
+* Add meaningful alt text when image is important
+* Use empty alt="" if decorative
+
+Example:
+
+<img src={image} alt="product image" />
+
+---
+
+### 4. REMOVE REDUNDANT CODE
+
+* Remove unnecessary nested blocks
+* Remove duplicate logic
+* Simplify conditionals
+
+---
+
+### 5. CLEAN COMPONENT STRUCTURE
+
+* Ensure consistent formatting
+* Keep functions readable
+* Group related logic together
+
+---
+
+### 6. VERIFY BUILD
+
+Ensure:
+
+* No ESLint warnings
+* No console warnings
+* Project compiles cleanly
+
+---
+
+## OUTPUT EXPECTATION
+
+* Clean, warning-free React codebase
+* No unused code
+* Proper hook usage
+* Accessible image tags
+* Stable and maintainable structure
+
+DO NOT introduce new features.
+DO NOT change UI.
+
+This is a strict cleanup pass only.
+
+Be precise and systematic across all files.
