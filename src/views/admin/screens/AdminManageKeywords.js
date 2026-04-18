@@ -46,7 +46,7 @@ const AdminManageKeywords = () => {
 
   useEffect(() => {
     dispatch(keywordsList());
-  }, [success,updateSuccess]);
+  }, [dispatch, success, updateSuccess]);
 
   return (
     <>

@@ -104,7 +104,7 @@ const resetHandler = () => {
       dispatch({ type: "UPDATE_PRODIMG_RESET" });
       resetHandler();
     }
-  }, [dispatch, updateImgError, updateImgSuccess]);
+  }, [dispatch, setOpenUpdateImgDial, updateImgError, updateImgSuccess]);
 
 
 
@@ -144,6 +144,7 @@ const resetHandler = () => {
           >
             <img
               src={photoOne}
+              alt="Subproduct first"
               style={{
                 width: "50%",
                 height: "50%",
@@ -153,6 +154,7 @@ const resetHandler = () => {
 
             <img
               src={photoTwo}
+              alt="Subproduct second"
               style={{
                 width: "50%",
                 height: "50%",

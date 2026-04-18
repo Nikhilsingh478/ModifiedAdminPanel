@@ -88,7 +88,6 @@ const AddProduct = () => {
 
       setKeywords(data);
     } catch (error) {
-      console.log(error);
     }
   };
   //handle the onchange onkeyword
@@ -120,7 +119,6 @@ const AddProduct = () => {
 
       setBrands(data);
     } catch (error) {
-      console.log(error);
     }
   };
 
@@ -354,6 +352,7 @@ const AddProduct = () => {
               {base64Data && (
                 <img
                   src={`data:image;base64,${base64Data}`}
+                  alt="Product preview"
                   style={{
                     width: "50px",
                     height: "50px",

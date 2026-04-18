@@ -1,16 +1,6 @@
 import React from "react";
 import Sidebar from "../components/Sidebar";
-import {
-  Card,
-  Grid,
-  Typography,
-  CardActions,
-  CardActionArea,
-  CardContent,
-  CardMedia,
-  Button,
-  Divider,
-} from "@mui/material";
+import { Card, Grid, Divider } from "@mui/material";
 import { Box } from "@mui/system";
 import "./AdminDashboard.css";
 import AppLogout from "../../../AppLogout";

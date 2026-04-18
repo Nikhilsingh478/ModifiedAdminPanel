@@ -145,6 +145,7 @@ const CategoryScreen = () => {
                               >
                                 <img
                                   src={cur.imagePath}
+                                  alt={cur.primaryCategory.primaryCategoryName}
                                   style={{
                                     width: "50px",
                                     height: "50px",

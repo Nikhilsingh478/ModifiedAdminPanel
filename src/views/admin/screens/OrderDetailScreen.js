@@ -27,7 +27,7 @@ const OrderDetailScreen = (props) => {
 
   useEffect(() => {
     dispatch(orderDetailShow(id));
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   return (
     <>
@@ -153,6 +153,7 @@ const OrderDetailScreen = (props) => {
                           <TableCell>
                             <img
                               src={cur.imagePathOne}
+                              alt={cur.subProductName}
                               style={{
                                 width: "50px",
                                 height: "50px",

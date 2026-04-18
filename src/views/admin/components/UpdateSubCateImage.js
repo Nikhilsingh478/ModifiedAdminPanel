@@ -75,7 +75,7 @@ const UpdateSubCateImage = ({
       dispatch({ type: "UPDATE_SUBCATEIMG_RESET" });
       resetHandler();
     }
-  }, [dispatch, updateImgError, updateImgSuccess]);
+  }, [dispatch, setOpenUpdateImgDial, updateImgError, updateImgSuccess]);
 
   return (
     <>
@@ -109,6 +109,7 @@ const UpdateSubCateImage = ({
           >
             <img
               src={photo}
+              alt="Subcategory"
               style={{
                 width: "100%",
                 height: "100%",

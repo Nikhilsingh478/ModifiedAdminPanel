@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Dialog } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { brandsList } from "../../../redux/actions/admin/brandAction";
@@ -56,7 +56,7 @@ const UpdateProd = ({
 
   //update prod state
   const updateProdState = useSelector((state) => state.updateProduct);
-  const { updateLoading, updateSuccess, updateError } = updateProdState;
+  const { updateSuccess, updateError } = updateProdState;
 
   //handle the onchange onkeyword
   const handleKeywordSelected = (e) => {
@@ -141,7 +141,7 @@ const UpdateProd = ({
     dispatch(keywordsList());
     dispatch(hsnCodeList());
     dispatch(allSubCateList());
-  }, [updateSuccess]);
+  }, [dispatch, setOpen, setProductName, updateError, updateSuccess]);
 
   return (
     <>

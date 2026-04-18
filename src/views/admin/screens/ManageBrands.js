@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useEffect } from "react";
 import Sidebar from "../components/Sidebar";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
@@ -7,7 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { Box, CircularProgress,Switch } from "@mui/material";
+import { Box, CircularProgress } from "@mui/material";
 import AddBrand from "../components/AddBrand";
 import { brandsList } from "../../../redux/actions/admin/brandAction";
 import { useDispatch, useSelector } from "react-redux";
@@ -19,7 +19,7 @@ const ManageBrands = () => {
 
     //brands list state
    const brandState = useSelector((state) => state.brandsList);
-  const { loading, brands, error } = brandState;
+  const { loading, brands } = brandState;
 
 
   //add brand state
@@ -28,7 +28,7 @@ const ManageBrands = () => {
 
   useEffect(() => {
     dispatch(brandsList());
-  }, [success]);
+  }, [dispatch, success]);
 
 
   return (

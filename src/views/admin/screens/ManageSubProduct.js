@@ -89,7 +89,7 @@ const ManageSubProduct = () => {
 
   useEffect(() => {
     dispatch(adminSubProductList(id, page));
-  }, [page, success, updateSuccess, updateImgSuccess]);
+  }, [dispatch, id, page, success, updateSuccess, updateImgSuccess]);
 
   return (
     <>
@@ -182,6 +182,7 @@ const ManageSubProduct = () => {
                                 >
                                   <img
                                     src={cur.imagePathOne}
+                                    alt={`${cur.subProduct.subProductName} first`}
                                     style={{
                                       width: "50px",
                                       height: "50px",
@@ -191,6 +192,7 @@ const ManageSubProduct = () => {
 
                                   <img
                                     src={cur.imagePathTwo}
+                                    alt={`${cur.subProduct.subProductName} second`}
                                     style={{
                                       width: "50px",
                                       height: "50px",

@@ -1,4 +1,3 @@
-import react from "react";
 import { Route, HashRouter } from "react-router-dom";
 import Login from "./views/Login";
 import AdminDashboard from "./views/admin/screens/AdminDashboard";
@@ -8,7 +7,7 @@ import ManageProducts from "./views/admin/screens/ManageProducts";
 import SubcategoryScreen from "./views/admin/screens/SubcategoryScreen";
 import ManageBrands from "./views/admin/screens/ManageBrands";
 import ManageSubProduct from "./views/admin/screens/ManageSubProduct";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import ProtectedRoutes from "./ProtectedRoutes";
 import AdminManageKeywords from "./views/admin/screens/AdminManageKeywords";
 import OrdersScreen from "./views/admin/screens/OrdersScreen";
@@ -17,7 +16,6 @@ import InvoiceScreen from "./views/admin/screens/InvoiceScreen";
 import HsncodeScreen from "./views/admin/screens/HsncodeScreen";
 
 const App = () => {
-  // const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.LoginUserReducer);
   const { userInfo } = userLogin;
 

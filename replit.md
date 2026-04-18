@@ -21,4 +21,5 @@ This is a Create React App frontend for an ecommerce/admin dashboard. It uses Re
 # Notes
 
 - The app depends on the external backend at `https://profee.in/ecommerce/ecommerce`.
-- Development compilation currently reports lint/accessibility warnings, but the frontend runs and responds successfully in the Replit preview.
+- React cleanup was performed to remove compile-time ESLint/accessibility warnings while preserving UI and business logic.
+- The development workflow currently compiles successfully and the preview loads the login screen.

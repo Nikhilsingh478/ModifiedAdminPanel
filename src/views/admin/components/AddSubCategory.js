@@ -59,7 +59,6 @@ const AddSubCategory = () => {
 
       setKeywords(data);
     } catch (error) {
-      console.log(error);
     }
   };
 
@@ -96,12 +95,10 @@ const AddSubCategory = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     if (!subCategoryName || !base64Data || !selectedKeyW || !id) {
-      {
-        return toast.error("All are required", {
-          position: "top-center",
-          duration: 2000,
-        });
-      }
+      return toast.error("All are required", {
+        position: "top-center",
+        duration: 2000,
+      });
     }
     dispatch(addSubCategory(subCategoryName, id, selectedKeyWID, base64Data));
     // history.push("/admin/category");
@@ -247,6 +244,7 @@ const AddSubCategory = () => {
               {base64Data && (
                 <img
                   src={`data:image;base64,${base64Data}`}
+                  alt="Subcategory preview"
                   style={{
                     marginLeft: "5px",
                     width: "50px",

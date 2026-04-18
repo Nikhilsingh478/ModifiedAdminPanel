@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import { logout } from "./redux/actions/userAction"
+import { useCallback, useEffect, useRef } from "react";
+import { logout } from "./redux/actions/userAction";
 import { useDispatch } from "react-redux";
 
 let LogOutTimer = process.env.REACT_APP_LOGOUT_TIMER;
@@ -14,37 +14,45 @@ const events = [
 ];
 
 const AppLogout = ({ children }) => {
-  let timer;
-    const dispatch = useDispatch();
+  const timer = useRef(null);
+  const dispatch = useDispatch();
 
-useEffect(() => {
-  Object.values(events).forEach((item) => {
-    window.addEventListener(item, () => {
+  const logoutAction = useCallback(() => {
+    dispatch(logout());
+  }, [dispatch]);
+
+  const resetTimer = useCallback(() => {
+    if (timer.current) clearTimeout(timer.current);
+  }, []);
+
+  const handleTimer = useCallback(() => {
+    timer.current = setTimeout(() => {
+      resetTimer();
+      logoutAction();
+    }, LogOutTimer);
+  }, [logoutAction, resetTimer]);
+
+  useEffect(() => {
+    const handleActivity = () => {
       resetTimer();
       handleTimer();
+    };
+
+    events.forEach((item) => {
+      window.addEventListener(item, handleActivity);
     });
-  });
-}, []);
 
-const resetTimer = () => {
-  if (timer) clearTimeout(timer);
-};
+    handleTimer();
 
-const handleTimer = () => {
-  timer = setTimeout(() => {
-    resetTimer();
-    Object.values(events).forEach((item) => {
-      window.removeEventListener(item, resetTimer);
-    });
-    logoutAction();
-  }, LogOutTimer);
-};
+    return () => {
+      resetTimer();
+      events.forEach((item) => {
+        window.removeEventListener(item, handleActivity);
+      });
+    };
+  }, [handleTimer, resetTimer]);
 
-const logoutAction = () => {
- dispatch(logout());
-};
   return children;
 };
 
 export default AppLogout;
-

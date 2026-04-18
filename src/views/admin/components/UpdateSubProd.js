@@ -7,7 +7,6 @@ import {
   Backdrop,
   CircularProgress,
 } from "@mui/material";
-import { useParams } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
 import {
   clearErrors,
@@ -36,8 +35,6 @@ const UpdateSubProd = ({
   setProductID,
 }) => {
   const dispatch = useDispatch();
-  const { id } = useParams("");
-
   //update sub prod state
   const updateSubProdState = useSelector((state) => state.updateSubProduct);
   const { updateLoading, updateSuccess, updateError } = updateSubProdState;
@@ -108,7 +105,7 @@ const UpdateSubProd = ({
     }
 
     dispatch(allProductsList());
-  }, [updateSuccess]);
+  }, [dispatch, setBuyingPrice, setDiscountPercent, setGst, setMRP, setOpen, setSellingPrice, setSubProductName, updateError, updateSuccess]);
   return (
     <>
       <Dialog open={open} onClose={() => setOpen(false)}>

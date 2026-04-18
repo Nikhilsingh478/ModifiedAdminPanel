@@ -188,6 +188,7 @@ const AddCategory = () => {
                 {base64Data && (
                   <img
                     src={`data:image;base64,${base64Data}`}
+                    alt="Primary category preview"
                     style={{
                       width: "50px",
                       height: "50px",

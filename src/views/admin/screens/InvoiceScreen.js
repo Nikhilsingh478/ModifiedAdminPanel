@@ -8,11 +8,9 @@ import {
   TableHead,
   TableRow,
   TableCell,
-  Typography,
   CircularProgress,
   Button,
 } from "@mui/material";
-import { styled } from "@mui/material";
 import AppLogout from "../../../AppLogout";
 import Sidebar from "../components/Sidebar";
 import { useParams } from "react-router-dom";
@@ -42,8 +40,6 @@ const InvoiceScreen = (props) => {
   //orders details state
   const orderDetailsState = useSelector((state) => state.orderDetail);
   const { loading, orderDetails } = orderDetailsState;
-  console.log(orderDetails);
-
   //print
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
@@ -51,7 +47,7 @@ const InvoiceScreen = (props) => {
 
   useEffect(() => {
     dispatch(orderDetailShow(id));
-  }, [dispatch]);
+  }, [dispatch, id]);
 
   return (
     <>

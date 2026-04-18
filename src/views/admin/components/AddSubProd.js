@@ -12,8 +12,6 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import ArrowBackIcon from "@mui/icons-material/ArrowBack";
-import axios from "axios";
-import store from "../../../store";
 import toast, { Toaster } from "react-hot-toast";
 import { useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -366,6 +364,7 @@ const AddSubProd = () => {
               {base64DataOne && (
                 <img
                   src={`data:image;base64,${base64DataOne}`}
+                  alt="Subproduct first preview"
                   style={{
                     width: "50px",
                     height: "50px",
@@ -390,6 +389,7 @@ const AddSubProd = () => {
               {base64DataTwo && (
                 <img
                   src={`data:image;base64,${base64DataTwo}`}
+                  alt="Subproduct second preview"
                   style={{
                     width: "50px",
                     height: "50px",

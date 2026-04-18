@@ -42,8 +42,6 @@ const ManageProducts = () => {
   const adminGetProdState = useSelector((state) => state.adminProdList);
   const { loading, adminProd } = adminGetProdState;
 
-  console.log(adminProd);
-
   //add product state
   const addProductState = useSelector((state) => state.addProduct);
   const { success } = addProductState;
@@ -66,8 +64,6 @@ const ManageProducts = () => {
     setHSNCodeID(hsnID);
   };
 
-  console.log(keywordID);
-
    //open update image dial box
   const openUpdateImgModel = (photo, id) => {
     setUpImageId(id);
@@ -78,7 +74,7 @@ const ManageProducts = () => {
   //load the list
   useEffect(() => {
     dispatch(adminProductList(id, page));
-  }, [page, success, updateSuccess,updateImgSuccess]);
+  }, [dispatch, id, page, success, updateSuccess, updateImgSuccess]);
   return (
     <>
       <AppLogout>
@@ -159,6 +155,7 @@ const ManageProducts = () => {
                               >
                               <img
                                 src={cur.imagePath}
+                                alt={cur.product.productName}
                                 style={{
                                   width: "50px",
                                   height: "50px",

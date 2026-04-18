@@ -75,7 +75,7 @@ const UpdateProdImage = ({
       dispatch({ type: "UPDATE_PRODIMG_RESET" });
       resetHandler();
     }
-  }, [dispatch, updateImgError, updateImgSuccess]);
+  }, [dispatch, setOpenUpdateImgDial, updateImgError, updateImgSuccess]);
 
   return (
     <>
@@ -109,6 +109,7 @@ const UpdateProdImage = ({
           >
             <img
               src={photo}
+              alt="Product"
               style={{
                 width: "100%",
                 height: "100%",

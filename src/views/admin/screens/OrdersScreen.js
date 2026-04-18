@@ -40,7 +40,7 @@ const OrdersScreen = () => {
 
   useEffect(() => {
     dispatch(ordersList(page));
-  }, [page, cancelSuccess, changeStatusSuccess]);
+  }, [dispatch, page, cancelSuccess, changeStatusSuccess]);
 
   useEffect(() => {
     if (cancelError) {

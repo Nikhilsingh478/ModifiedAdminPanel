@@ -48,7 +48,7 @@ const UpdateCategory = ({open,setOpen,updateCategoryId,categoryName,setCategoryN
       setOpen(false);
     }
 
-  }, [ updateSuccess, dispatch]);
+  }, [dispatch, setCategoryName, setOpen, updateError, updateSuccess]);
 
 
   return (

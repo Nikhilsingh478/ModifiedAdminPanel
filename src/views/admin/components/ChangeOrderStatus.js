@@ -17,7 +17,7 @@ const ChangeOrderStatus = ({orderId}) => {
 
   useEffect(() => {
     dispatch(orderStatusList());
-  }, []);
+  }, [dispatch]);
 
   return (
     <>

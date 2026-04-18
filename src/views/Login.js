@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { useHistory, Link } from "react-router-dom";
 import { loginUser } from "../redux/actions/userAction";
 import { useSelector, useDispatch } from "react-redux";
 import {
@@ -15,14 +14,14 @@ import toast, { Toaster } from "react-hot-toast";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 const theme = createTheme();
 
-const Login = ({ history }) => {
+const Login = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const dispatch = useDispatch();
   const userLogin = useSelector((state) => state.LoginUserReducer);
-  const { error, success, loading, userInfo } = userLogin;
+  const { error, success, loading } = userLogin;
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -108,6 +107,7 @@ const Login = ({ history }) => {
                     required
                     label="Enter Email"
                     name="email"
+                    autoComplete="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     autoFocus
@@ -120,6 +120,7 @@ const Login = ({ history }) => {
                     label="Enter Password"
                     type="password"
                     name="pass"
+                    autoComplete="current-password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     autoFocus

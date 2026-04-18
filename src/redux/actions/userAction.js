@@ -19,7 +19,6 @@ export const registerUser =
         { fullName, emailId, mobilenumber, password },
         config
       );
-      console.log(res);
       // console.log(fullName, emailId,mobilenumber, password);
 
       dispatch({ type: "USER_REGISTER_SUCCESS", payload: res });

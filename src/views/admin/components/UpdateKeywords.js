@@ -60,7 +60,7 @@ const UpdateKeywords = ({
       setOpen(false);
     }
 
-  }, [ updateSuccess, dispatch]);
+  }, [dispatch, setOpen, setUpdatekeyText, updateError, updateSuccess]);
 
   return (
     <>

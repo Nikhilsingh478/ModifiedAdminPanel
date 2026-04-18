@@ -7,8 +7,7 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { CircularProgress, Box, Button, Dialog } from "@mui/material";
-import Switch from "@mui/material/Switch";
+import { CircularProgress, Box, Dialog } from "@mui/material";
 import toast, { Toaster } from "react-hot-toast";
 import {
   customerList,
@@ -75,7 +74,7 @@ const CustomersList = () => {
       });
       dispatch({ type: "ACTIVE_INACTIVE_RESET" });
     }
-  }, [dispatch, activeInactiveerror, activeInactivesuccess]);
+  }, [dispatch, activeInactiveerror, activeInactivesuccess, customers]);
 
   return (
     <>

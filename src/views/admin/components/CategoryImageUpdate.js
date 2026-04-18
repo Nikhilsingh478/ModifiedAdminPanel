@@ -78,7 +78,7 @@ const CategoryImageUpdate = ({
       dispatch({ type: "UPDATE_PRIMARYCATEIMG_RESET" });
       resetHandler();
     }
-  }, [dispatch, updateImgError, updateImgSuccess]);
+  }, [dispatch, setOpenUpdateImgDial, updateImgError, updateImgSuccess]);
 
   return (
     <>
@@ -113,6 +113,7 @@ const CategoryImageUpdate = ({
           >
             <img
               src={photo}
+              alt="Primary category"
               style={{
                 width: "100%",
                 height: "100%",

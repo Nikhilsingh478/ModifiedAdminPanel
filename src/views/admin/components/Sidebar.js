@@ -24,7 +24,6 @@ import PeopleIcon from "@mui/icons-material/People";
 import PersonIcon from "@mui/icons-material/Person";
 import { logout } from "../../../redux/actions/userAction";
 import { useDispatch } from "react-redux";
-import AppLogout from "../../../AppLogout";
 
 const sidebarNavigationData = [
   {
@@ -79,18 +78,12 @@ const Sidebar = () => {
   const dispatch = useDispatch();
   const [openDrawer, setOpenDrawer] = useState(true);
   const [show, setShow] = useState(false);
-  const [activeItem, setActiveItem] = useState(0);
   const logoutHandler = () => {
     dispatch(logout());
   };
 
-  const handleClick = async (index) => {
-    await setActiveItem(index);
-  };
-
   return (
     <>
-      <AppLogout>
         <Box>
           <AppBar
             component={"nav"}
@@ -224,21 +217,17 @@ const Sidebar = () => {
           <Divider />
 
           <List sx={{ marginTop: "10px" }}>
-            {sidebarNavigationData.map((cur, index) => {
+            {sidebarNavigationData.map((cur) => {
               return (
-                <>
-                  <Box key={cur.id}>
-                    <ListItemButton
-                      // selected={activeItem === index}
-                      to={cur.to}
-                      component={Link}
-                      onClick={() => handleClick(index)}
-                    >
-                      <ListItemIcon>{cur.icon}</ListItemIcon>
-                      <ListItemText>{cur.label}</ListItemText>
-                    </ListItemButton>
-                  </Box>
-                </>
+                <Box key={cur.id}>
+                  <ListItemButton
+                    to={cur.to}
+                    component={Link}
+                  >
+                    <ListItemIcon>{cur.icon}</ListItemIcon>
+                    <ListItemText>{cur.label}</ListItemText>
+                  </ListItemButton>
+                </Box>
               );
             })}
           </List>
@@ -249,7 +238,6 @@ const Sidebar = () => {
         >
           <MenuIcon />
         </IconButton>
-      </AppLogout>
     </>
   );
 };

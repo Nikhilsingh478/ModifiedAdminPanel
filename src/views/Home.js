@@ -25,7 +25,6 @@ const Home = () => {
 
   useEffect(() => {
     if (localStorage.getItem("userInfo")) {
-      console.log("yes boss");
     } else {
       window.location.href = "/login";
     }

@@ -8,7 +8,7 @@ import {
   Button,
   Backdrop,
 } from "@mui/material";
-import toast, { Toaster } from "react-hot-toast";
+import toast from "react-hot-toast";
 import {
   updateSubCategory,
   clearErrors,
@@ -99,7 +99,7 @@ const UpdateSubCate = ({
 
     dispatch(keywordsList());
     dispatch(allPrimaryCateList());
-  }, [updateSuccess, dispatch]);
+  }, [dispatch, setOpen, setSubCategoryName, updateError, updateSuccess]);
 
   return (
     <>
