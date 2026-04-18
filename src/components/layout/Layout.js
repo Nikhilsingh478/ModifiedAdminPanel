@@ -30,7 +30,15 @@ const Layout = ({ children }) => {
         >
           <Topbar handleDrawerToggle={handleDrawerToggle} />
           
-          <Box className="layout-content" sx={{ p: { xs: 2, md: 4 }, flexGrow: 1, overflowX: "hidden" }}>
+          <Box 
+            className="layout-content" 
+            sx={{ 
+              p: { xs: 2, md: 4 }, 
+              flexGrow: 1, 
+              overflowX: "hidden",
+              animation: 'fadeIn 0.3s ease-in'
+            }}
+          >
             {children}
           </Box>
         </Box>

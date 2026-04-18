@@ -73,10 +73,10 @@ const AddHSNcode = () => {
 
   return (
     <>
-      <div className="add-button-subHeader">
+      <div className="add-button-subHeader" style={{ border: 'none', outline: 'none', boxShadow: 'none' }}>
         <Toolbar>
           <Typography
-            sx={{ flex: "1 1 100%" }}
+            sx={{ flex: "1 1 100%", display: 'flex', alignItems: 'center', gap: '24px' }}
             variant="h6"
             id="tableTitle"
             component="div"
@@ -95,8 +95,49 @@ const AddHSNcode = () => {
               variant="contained"
               onClick={openHSNCodeDialog}
               startIcon={<AddIcon />}
+              sx={{
+                background: '#1976d2',
+                color: 'white',
+                fontWeight: 500,
+                padding: '8px 20px',
+                borderRadius: '6px',
+                textTransform: 'none',
+                fontSize: '0.875rem',
+                minWidth: '140px',
+                whiteSpace: 'nowrap',
+                border: 'none !important',
+                outline: 'none !important',
+                boxShadow: 'none !important',
+                '& .MuiButton-root': {
+                  border: 'none !important',
+                },
+                '& .MuiOutlinedInput-root': {
+                  border: 'none !important',
+                },
+                transition: 'background-color 0.2s ease',
+                '&:hover': {
+                  background: '#1565c0',
+                  border: 'none !important',
+                  boxShadow: 'none !important',
+                },
+                '&:active': {
+                  background: '#0d47a1',
+                  border: 'none !important',
+                  boxShadow: 'none !important',
+                },
+                '&:focus': {
+                  outline: 'none !important',
+                  boxShadow: 'none !important',
+                  border: 'none !important',
+                },
+                '&:focus-visible': {
+                  outline: 'none !important',
+                  boxShadow: 'none !important',
+                  border: 'none !important',
+                }
+              }}
             >
-              HSN
+              HSN Code
             </Button>
           </Tooltip>
         </Toolbar>
@@ -143,9 +184,33 @@ const AddHSNcode = () => {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 1, mb: 1 }}
+              sx={{ 
+                mt: 1, 
+                mb: 1,
+                background: '#9c27b0',
+                color: 'white',
+                fontWeight: 500,
+                padding: '10px',
+                borderRadius: '6px',
+                textTransform: 'none',
+                fontSize: '0.875rem',
+                border: 'none',
+                outline: 'none',
+                boxShadow: 'none',
+                transition: 'background-color 0.2s ease',
+                '&:hover': {
+                  background: '#7b1fa2',
+                },
+                '&:active': {
+                  background: '#7b1fa2',
+                },
+                '&:focus': {
+                  outline: 'none',
+                  boxShadow: 'none',
+                }
+              }}
             >
-              Submit
+              Add HSN Code
             </Button>
           </Box>
         </div>

@@ -1,11 +1,15 @@
-import React, { createContext, useState, useMemo } from 'react';
+import React, { createContext, useState, useMemo, useEffect } from 'react';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { getThemeOptions } from './theme';
 
 export const ColorModeContext = createContext({ toggleColorMode: () => {} });
 
 export const CustomThemeProvider = ({ children }) => {
-  const [mode, setMode] = useState('light');
+  const [mode, setMode] = useState(() => {
+    // Get saved theme from localStorage or default to 'light'
+    const savedMode = localStorage.getItem('themeMode');
+    return savedMode || 'light';
+  });
 
   const colorMode = useMemo(
     () => ({
@@ -17,6 +21,11 @@ export const CustomThemeProvider = ({ children }) => {
   );
 
   const theme = useMemo(() => createTheme(getThemeOptions(mode)), [mode]);
+
+  // Save theme mode to localStorage whenever it changes
+  useEffect(() => {
+    localStorage.setItem('themeMode', mode);
+  }, [mode]);
 
   return (
     <ColorModeContext.Provider value={colorMode}>

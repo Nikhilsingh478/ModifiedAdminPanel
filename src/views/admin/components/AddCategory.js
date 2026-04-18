@@ -98,10 +98,10 @@ const AddCategory = () => {
 
   return (
     <>
-      <div className="add-button-subHeader">
+      <div className="add-button-subHeader" style={{ border: 'none', outline: 'none', boxShadow: 'none' }}>
         <Toolbar>
           <Typography
-            sx={{ flex: "1 1 100%" }}
+            sx={{ flex: "1 1 100%", display: 'flex', alignItems: 'center', gap: '24px' }}
             variant="h6"
             id="tableTitle"
             component="div"
@@ -120,8 +120,48 @@ const AddCategory = () => {
               variant="contained"
               onClick={openPrimaryCategoryDialog}
               startIcon={<AddIcon />}
+              sx={{
+                background: '#1976d2',
+                color: 'white',
+                fontWeight: 500,
+                padding: '8px 20px',
+                borderRadius: '6px',
+                textTransform: 'none',
+                fontSize: '0.875rem',
+                minWidth: '120px',
+                border: 'none !important',
+                outline: 'none !important',
+                boxShadow: 'none !important',
+                '& .MuiButton-root': {
+                  border: 'none !important',
+                },
+                '& .MuiOutlinedInput-root': {
+                  border: 'none !important',
+                },
+                transition: 'background-color 0.2s ease',
+                '&:hover': {
+                  background: '#1565c0',
+                  border: 'none !important',
+                  boxShadow: 'none !important',
+                },
+                '&:active': {
+                  background: '#0d47a1',
+                  border: 'none !important',
+                  boxShadow: 'none !important',
+                },
+                '&:focus': {
+                  outline: 'none !important',
+                  boxShadow: 'none !important',
+                  border: 'none !important',
+                },
+                '&:focus-visible': {
+                  outline: 'none !important',
+                  boxShadow: 'none !important',
+                  border: 'none !important',
+                }
+              }}
             >
-              Primary
+              Category
             </Button>
           </Tooltip>
         </Toolbar>
@@ -204,9 +244,33 @@ const AddCategory = () => {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 2, mb: 4 }}
+              sx={{ 
+                mt: 2, 
+                mb: 4,
+                background: '#1976d2',
+                color: 'white',
+                fontWeight: 500,
+                padding: '10px',
+                borderRadius: '6px',
+                textTransform: 'none',
+                fontSize: '0.875rem',
+                border: 'none',
+                outline: 'none',
+                boxShadow: 'none',
+                transition: 'background-color 0.2s ease',
+                '&:hover': {
+                  background: '#1565c0',
+                },
+                '&:active': {
+                  background: '#0d47a1',
+                },
+                '&:focus': {
+                  outline: 'none',
+                  boxShadow: 'none',
+                }
+              }}
             >
-              ADD
+              Add Category
             </Button>
           </Box>
         </div>

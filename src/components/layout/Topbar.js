@@ -84,7 +84,15 @@ const Topbar = ({ handleDrawerToggle }) => {
           aria-label="open drawer"
           edge="start"
           onClick={handleDrawerToggle}
-          sx={{ mr: 2, display: { md: "none" } }}
+          sx={{ 
+            mr: 2, 
+            display: { md: "none" },
+            transition: 'all 0.2s ease',
+            '&:hover': {
+              transform: 'scale(1.1)',
+              backgroundColor: 'action.hover'
+            }
+          }}
         >
           <MenuIcon />
         </IconButton>
@@ -97,9 +105,15 @@ const Topbar = ({ handleDrawerToggle }) => {
           <Link to="/admin/dashboard">
             <Box
               component="img"
-              sx={{ height: 40 }}
+              sx={{ 
+                height: 40,
+                transition: 'all 0.2s ease',
+                '&:hover': {
+                  transform: 'scale(1.05)'
+                }
+              }}
               alt="Logo"
-              src="./images/logo.svg"
+              src="/images/logo.svg"
             />
           </Link>
         </Typography>
@@ -117,20 +131,56 @@ const Topbar = ({ handleDrawerToggle }) => {
         <Box sx={{ flexGrow: 1 }} />
 
         <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
-          <IconButton sx={{ ml: 1 }} onClick={colorMode.toggleColorMode} color="inherit">
-            {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-          </IconButton>
+          <IconButton 
+          sx={{ 
+            ml: 1, 
+            transition: 'all 0.2s ease',
+            '&:hover': {
+              transform: 'scale(1.1)',
+              backgroundColor: 'action.hover'
+            }
+          }} 
+          onClick={colorMode.toggleColorMode} 
+          color="inherit"
+        >
+          {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+        </IconButton>
 
-          <IconButton color="inherit">
-            <Badge badgeContent={0} color="error">
-              <NotificationsIcon style={{ color: theme.palette.mode === 'light' ? "#64748b" : "#a3a3a3" }} />
-            </Badge>
-          </IconButton>
+          <IconButton 
+          color="inherit"
+          sx={{
+            transition: 'all 0.2s ease',
+            '&:hover': {
+              transform: 'scale(1.1)',
+              backgroundColor: 'action.hover'
+            }
+          }}
+        >
+          <Badge badgeContent={0} color="error">
+            <NotificationsIcon style={{ color: theme.palette.mode === 'light' ? "#64748b" : "#a3a3a3" }} />
+          </Badge>
+        </IconButton>
 
-          <IconButton onClick={handleMenu} color="inherit" sx={{ p: 0.5 }}>
+          <IconButton 
+            onClick={handleMenu} 
+            color="inherit" 
+            sx={{ 
+              p: 0.5,
+              transition: 'all 0.2s ease',
+              '&:hover': {
+                transform: 'scale(1.05)',
+                backgroundColor: 'action.hover'
+              }
+            }}
+          >
             <Avatar 
-              src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?auto=format&fit=crop&w=150&q=80" 
-              sx={{ width: 36, height: 36, border: `2px solid ${theme.palette.primary.main}` }} 
+              src="/images/cropped_circle_image.webp" 
+              sx={{ 
+                width: 36, 
+                height: 36, 
+                border: `2px solid ${theme.palette.primary.main}`,
+                transition: 'all 0.2s ease'
+              }} 
             />
           </IconButton>
           <Menu
