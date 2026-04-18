@@ -21,7 +21,7 @@ const HsncodeScreen = () => {
 
   useEffect(() => {
     dispatch(hsnCodeList());
-  }, [addloading, dispatch]);
+  }, [dispatch]);
 
   const columns = [
     { label: "#id", field: "id" },

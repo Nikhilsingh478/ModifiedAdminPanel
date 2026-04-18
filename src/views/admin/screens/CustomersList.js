@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { circularProgressClasses, Box, Dialog, CircularProgress, OutlinedInput } from "@mui/material";
+import { Box, Dialog, CircularProgress, OutlinedInput } from "@mui/material";
 import toast, { Toaster } from "react-hot-toast";
 import {
   customerList,
@@ -17,7 +17,6 @@ import DataTable from "../../../components/common/DataTable";
 const CustomersList = () => {
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");
-  const [inactiveUserList, setInactiveUserList] = useState([]);
   const [open, setOpen] = useState(false);
   //customer state
   const customerState = useSelector((state) => state.customersList);
@@ -33,20 +32,7 @@ const CustomersList = () => {
   );
   const { activeInactivesuccess, activeInactiveerror } = activeInactiveState;
 
-  function notiCount() {
-    const inactiveUsers = customers
-      ? customers.filter((user) => !user.isActive)
-      : null;
-    setInactiveUserList(inactiveUsers);
-  }
-
-  //active user
-  const activeUser = async (id) => {
-    if (window.confirm("are you sure")) {
-      dispatch(activeInactiveUser(id));
-    }
-  };
-
+  
   //customer img
   const viewCustomerImg = async (id) => {
     setOpen(true);
@@ -54,7 +40,6 @@ const CustomersList = () => {
   };
 
   useEffect(() => {
-    notiCount();
     dispatch(customerList());
     if (activeInactiveerror) {
       toast.error("Something went wrong", {
@@ -68,7 +53,7 @@ const CustomersList = () => {
       });
       dispatch({ type: "ACTIVE_INACTIVE_RESET" });
     }
-  }, [dispatch, activeInactiveerror, activeInactivesuccess, customers]);
+  }, [dispatch, activeInactiveerror, activeInactivesuccess]);
 
   const columns = [
     { label: "#id", field: "id" },

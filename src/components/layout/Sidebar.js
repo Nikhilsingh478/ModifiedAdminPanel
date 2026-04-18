@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Drawer,
   List,
@@ -15,8 +15,8 @@ import CategoryIcon from "@mui/icons-material/Category";
 import AddIcon from "@mui/icons-material/Add";
 import DashboardIcon from "@mui/icons-material/Dashboard";
 import LocalGroceryStoreIcon from "@mui/icons-material/LocalGroceryStore";
-import PeopleIcon from "@mui/icons-material/People";
 import CloseIcon from "@mui/icons-material/Close";
+import PeopleIcon from "@mui/icons-material/People";
 import { Link, useLocation } from "react-router-dom";
 import { Avatar } from "@mui/material";
 

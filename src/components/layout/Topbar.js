@@ -13,7 +13,6 @@ import {
   useTheme,
   Avatar,
 } from "@mui/material";
-import PersonIcon from "@mui/icons-material/Person";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 import SearchIcon from "@mui/icons-material/Search";
 import Brightness4Icon from "@mui/icons-material/Brightness4";
