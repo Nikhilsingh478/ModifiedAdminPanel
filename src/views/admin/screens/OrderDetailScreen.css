@@ -1,0 +1,70 @@
+.orderdetails .invoice-div {
+  /* margin: 1rem; */
+}
+.orderdetails .invoice-div h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI,
+    Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji,
+    Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+}
+.orderdetails .invoice-div p {
+  font-size: 0.85rem;
+  color: #707275;
+  font-weight: 600;
+}
+.orderdetails .invoice-div span {
+  font-weight: 500;
+  font-size: 1rem;
+}
+.orderdetails .address-details {
+  /* margin: 1rem; */
+}
+.orderdetails .address-details h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI,
+    Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji,
+    Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+}
+.orderdetails .address-details .address-div {
+  width: 300px;
+  /* background-color: red; */
+}
+.orderdetails .address-details .address-div p {
+  font-size: 1rem;
+  color: #707275;
+  font-weight: 500;
+}
+.orderdetails .address-details p {
+  font-size: 0.85rem;
+  color: #707275;
+  font-weight: 600;
+}
+.orderdetails .address-details span {
+  font-weight: 500;
+  font-size: 1rem;
+}
+
+/* amount details */
+.orderdetails .detail {
+  margin: 1rem;
+  padding: 1rem;
+}
+.orderdetails .amount-detail .detail .amount-heading {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #4c4f52;
+  font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, Segoe UI,
+    Roboto, Helvetica Neue, Arial, Noto Sans, sans-serif, Apple Color Emoji,
+    Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+}
+.orderdetails .amount-detail .amount-rs {
+  color: #707275;
+  font-size: 1.1rem;
+}
+.orderdetails .amount-detail .final-rs {
+  color: #f05252;
+  font-size: 1.25rem;
+  font-weight: 600;
+}

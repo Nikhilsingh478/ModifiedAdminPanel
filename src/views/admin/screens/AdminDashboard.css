@@ -1,0 +1,7 @@
+.total-orders-div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 19px;
+  font-weight: 500;
+}

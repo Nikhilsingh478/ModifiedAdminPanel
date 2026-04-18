@@ -1,0 +1,56 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
+body {
+  margin: 0;
+  font-family: "Roboto", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
+    monospace;
+}
+::-webkit-scrollbar {
+  width: 0.4rem;
+  height: 0.1rem;
+}
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+.fileUpoption > input::file-selector-button {
+  cursor: pointer;
+  width: 100%;
+  height: 5vh;
+  z-index: 2;
+  margin: 0%;
+  border: 1px solid #888;
+  /* font: 400 0.8vmax cursive; */
+  transition: all 0.5s;
+  padding: 0 1vmax;
+  color: rgba(0, 0, 0, 0.623);
+  background-color: rgb(255, 255, 255);
+}
+.fileUpoption > input::file-selector-button:hover {
+  background-color: rgb(235, 235, 235);
+}
+
+.add-button-subHeader {
+  margin-top: -31px;
+  border: 1px solid #e6e6e6;
+  width: 99%;
+}
+/* table,
+th,
+td {
+  border: 0.5px solid #e8eaf6;
+  width: 2rem;
+} */
+
+.deactive {
+  opacity: 0.38;
+}
+
+.active {
+  opacity: 2.38;
+}

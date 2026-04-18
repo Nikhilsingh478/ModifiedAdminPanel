@@ -1,0 +1,27 @@
+/* Footer component */
+
+footer {
+  /* position: fixed; */
+  right: 0;
+  left: 0;
+  bottom: 0;
+  opacity: 0.95;
+  z-index: 2;
+  background-color: #08273a;
+  color: white;
+  text-align: center;
+}
+
+footer .fab {
+  color: white;
+  margin: 0 0.5em;
+}
+
+footer .fab:hover {
+  color: rgb(255, 251, 0);
+  cursor: pointer;
+}
+
+footer #kalpesh:hover {
+  color: rgb(255, 251, 0);
+}

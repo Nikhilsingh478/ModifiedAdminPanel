@@ -1,0 +1,43 @@
+.invoice-screen {
+  margin: 1.2rem;
+}
+.invoice-screen .profee-logo {
+  display: flex;
+  justify-content: center;
+}
+.invoice-screen .profee-logo img {
+  height: 40px;
+  width: 150px;
+  align-items: center;
+}
+.invoice-screen .bill-left-part {
+  width: 35%;
+  margin-left: 5%;
+}
+.invoice-screen .bill-right-part {
+  width: 40%;
+  margin-right: 5%;
+}
+.invoice-screen .bill-heading p {
+  font-size: 15px;
+  line-height: 0.7;
+}
+
+.invoice-screen .product-details .product-content {
+  font-size: 14px;
+}
+
+.invoice-screen .bottom-side-bill .bottom-left-side {
+  width: 40%;
+  margin-left: 10%;
+}
+
+.invoice-screen .bottom-side-bill .bottom-right-side {
+  width: 40%;
+  margin-right: 10%;
+  /* border: 1px solid; */
+}
+
+.invoice-screen .bottom-side-bill .bank-line {
+  line-height: 0.7;
+}
