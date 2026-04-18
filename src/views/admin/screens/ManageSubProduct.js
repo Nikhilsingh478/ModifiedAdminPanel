@@ -1,23 +1,18 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "../components/Sidebar";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { Box, CircularProgress, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { adminSubProductList } from "../../../redux/actions/admin/adminProductAction";
 import AddSubProd from "../components/AddSubProd";
 import Pagination from "../../Pagination";
-import AppLogout from "../../../AppLogout";
 import ModeEditIcon from "@mui/icons-material/ModeEdit";
 import UpdateSubProd from "../components/UpdateSubProd";
 import UpdateSubProductImage from "../components/UpdateSubProductImage";
 import VisibilityIcon from "@mui/icons-material/Visibility";
+
+import Layout from "../../../components/layout/Layout";
+import PageHeader from "../../../components/common/PageHeader";
+import DataTable from "../../../components/common/DataTable";
 
 const ManageSubProduct = () => {
   const dispatch = useDispatch();
@@ -44,7 +39,6 @@ const ManageSubProduct = () => {
   const adminGetSubProdState = useSelector((state) => state.subProductList);
   const { loading, adminSubProd } = adminGetSubProdState;
 
-  // console.log(adminSubProd);
   //add sub product state
   const addSubProductState = useSelector((state) => state.addSubProduct);
   const { success } = addSubProductState;
@@ -57,7 +51,6 @@ const ManageSubProduct = () => {
   const updateSubProdImgState = useSelector((state) => state.updateSubProdImg);
   const { updateImgSuccess } = updateSubProdImgState;
 
-  //open model to set the current click product id
   const openModel = (
     subprodID,
     subProdName,
@@ -79,7 +72,6 @@ const ManageSubProduct = () => {
     setProductID(prodID);
   };
 
-  //open update image dial box
   const openUpdateImgModel = (photo1, photo2, id) => {
     setUpImageId(id);
     setOpenUpdateImgDial(true);
@@ -91,218 +83,91 @@ const ManageSubProduct = () => {
     dispatch(adminSubProductList(id, page));
   }, [dispatch, id, page, success, updateSuccess, updateImgSuccess]);
 
+  const columns = [
+    { label: "#id", field: "id" },
+    { label: "Images", field: "images" },
+    { label: "Name", field: "name" },
+    { label: "Buying price", field: "buyingPrice" },
+    { label: "Selling price", field: "sellingPrice" },
+    { label: "MRP", field: "mrp" },
+    { label: "Total buying price(with gst)", field: "totalBuyingPrice" },
+    { label: "Total selling price(with gst)", field: "totalSellingPrice" },
+    { label: "GST(%)", field: "gst" },
+    { label: "Discount(%)", field: "discount" },
+    { label: "Action", field: "action" },
+  ];
+
   return (
-    <>
-      <AppLogout>
-        <div className="dashboar-section">
-          <div className="sidebar-div">
-            <Sidebar />
-          </div>
+    <Layout>
+      <PageHeader title="Manage Sub Products" actionButton={<AddSubProd />} />
+      <DataTable
+        columns={columns}
+        data={adminSubProd || []}
+        loading={loading}
+        renderCell={(row, col, rowIndex) => {
+          if (col.field === "id") return rowIndex + 1;
+          if (col.field === "images") return (
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+              <div style={{ border: "1px solid #e6e6e6", width: "95px", height: "70px", display: "flex", justifyContent: "center", alignItems: "center" }}>
+                <img src={row.imagePathOne} alt="first" style={{ width: "40px", height: "40px", margin: "4px" }} />
+                <img src={row.imagePathTwo} alt="second" style={{ width: "40px", height: "40px", margin: "4px" }} />
+              </div>
+              <VisibilityIcon
+                onClick={() => openUpdateImgModel(row.imagePathOne, row.imagePathTwo, row.id)}
+                sx={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "6px", marginLeft: "10%", cursor: "pointer" }}
+              />
+            </div>
+          );
+          if (col.field === "name") return row.subProduct.subProductName;
+          if (col.field === "buyingPrice") return `${row.subProduct.buyingPrice} ₹`;
+          if (col.field === "sellingPrice") return `${row.subProduct.sellingPrice} ₹`;
+          if (col.field === "mrp") return `${row.subProduct.mrp} ₹`;
+          if (col.field === "totalBuyingPrice") return `${row.subProduct.totalBuyingPrice} ₹`;
+          if (col.field === "totalSellingPrice") return `${row.subProduct.totalSellingPrice} ₹`;
+          if (col.field === "gst") return `${row.subProduct.gst}%`;
+          if (col.field === "discount") return `${row.subProduct.discountPercent}%`;
+          if (col.field === "action") return (
+            <IconButton aria-label="edit" color="primary">
+              <ModeEditIcon onClick={() => openModel(
+                row.subProduct.id, row.subProduct.subProductName, row.subProduct.buyingPrice,
+                row.subProduct.sellingPrice, row.subProduct.gst, row.subProduct.discountPercent,
+                row.subProduct.mrp, row.subProduct.product.id
+              )} />
+            </IconButton>
+          );
+          return row[col.field];
+        }}
+      />
 
-          <div
-            style={{
-              marginLeft: "16%",
-            }}
-          >
-            <AddSubProd />
+      <UpdateSubProd
+        open={open}
+        setOpen={setOpen}
+        subProductID={subProductID}
+        subProductName={subProductName}
+        setSubProductName={setSubProductName}
+        buyingPrice={buyingPrice}
+        setBuyingPrice={setBuyingPrice}
+        sellingPrice={sellingPrice}
+        setSellingPrice={setSellingPrice}
+        gst={gst}
+        setGst={setGst}
+        discountPercent={discountPercent}
+        setDiscountPercent={setDiscountPercent}
+        MRP={MRP}
+        setMRP={setMRP}
+        productID={productID}
+        setProductID={setProductID}
+      />
 
-            <TableContainer
-              component={Paper}
-              style={{
-                margin: "1rem",
-              }}
-              sx={{ maxHeight: "680px", maxWidth: "98%" }}
-            >
-              <Table
-                style={{
-                  width: "95%",
-                }}
-                stickyHeader
-                aria-label="sticky table"
-              >
-                <div className="loading-style">
-                  {loading && (
-                    <>
-                      <Box sx={{ display: "flex" }}>
-                        <CircularProgress />
-                      </Box>
-                    </>
-                  )}
-                </div>
-                <TableHead>
-                  <TableRow>
-                    <TableCell size="small">#id</TableCell>
-                    <TableCell width="15%">images</TableCell>
-                    <TableCell size="small">Name</TableCell>
-                    <TableCell>Buying price</TableCell>
-                    <TableCell>Selling price</TableCell>
-                    <TableCell>MRP</TableCell>
-                    <TableCell>Total buying price(with gst) </TableCell>
-                    <TableCell>Total selling price(with gst) </TableCell>
-                    <TableCell>GST(%)</TableCell>
-                    <TableCell>Discount(%)</TableCell>
-                    <TableCell>Action</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {adminSubProd &&
-                    adminSubProd.map((cur, ind) => {
-                      return (
-                        <>
-                          <TableRow
-                            hover
-                            key={ind}
-                            sx={{
-                              "&:last-child td, &:last-child th": { border: 0 },
-                            }}
-                          >
-                            <TableCell>{ind + 1}</TableCell>
-
-                            <TableCell
-                              style={{
-                                cursor: "pointer",
-                              }}
-                            >
-                              <div
-                                style={{
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  justifyContent: "center",
-                                }}
-                              >
-                                <div
-                                  style={{
-                                    border: "1px solid #e6e6e6",
-                                    width: "95%",
-                                    height: "70px",
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                  }}
-                                >
-                                  <img
-                                    src={cur.imagePathOne}
-                                    alt={`${cur.subProduct.subProductName} first`}
-                                    style={{
-                                      width: "50px",
-                                      height: "50px",
-                                      margin: "8px",
-                                    }}
-                                  />
-
-                                  <img
-                                    src={cur.imagePathTwo}
-                                    alt={`${cur.subProduct.subProductName} second`}
-                                    style={{
-                                      width: "50px",
-                                      height: "50px",
-                                    }}
-                                  />
-                                </div>
-                                <VisibilityIcon
-                                  onClick={() =>
-                                    openUpdateImgModel(
-                                      cur.imagePathOne,
-                                      cur.imagePathTwo,
-                                      cur.id
-                                    )
-                                  }
-                                  sx={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    marginTop: "6px",
-                                    marginLeft: "10%",
-                                  }}
-                                />
-                              </div>
-                            </TableCell>
-                            <TableCell>
-                              {cur.subProduct.subProductName}
-                            </TableCell>
-
-                            <TableCell>
-                              {cur.subProduct.buyingPrice} ₹
-                            </TableCell>
-
-                            <TableCell>
-                              {cur.subProduct.sellingPrice} ₹
-                            </TableCell>
-
-                            <TableCell> {cur.subProduct.mrp} ₹</TableCell>
-
-                            <TableCell>
-                              {cur.subProduct.totalBuyingPrice} ₹
-                            </TableCell>
-                            <TableCell>
-                              {cur.subProduct.totalSellingPrice} ₹
-                            </TableCell>
-                            <TableCell>{cur.subProduct.gst}%</TableCell>
-                            <TableCell>
-                              {cur.subProduct.discountPercent}%
-                            </TableCell>
-
-                            {/* {cur.subProduct.isActive === 1
-                              ? "Active"
-                              : "Deactive"} */}
-                            <TableCell>
-                              <IconButton aria-label="edit" color="primary">
-                                <ModeEditIcon
-                                  onClick={() =>
-                                    openModel(
-                                      cur.subProduct.id,
-                                      cur.subProduct.subProductName,
-                                      cur.subProduct.buyingPrice,
-                                      cur.subProduct.sellingPrice,
-                                      cur.subProduct.gst,
-                                      cur.subProduct.discountPercent,
-                                      cur.subProduct.mrp,
-                                      cur.subProduct.product.id
-                                    )
-                                  }
-                                />
-                              </IconButton>
-                            </TableCell>
-                          </TableRow>
-                        </>
-                      );
-                    })}
-                </TableBody>
-              </Table>
-            </TableContainer>
-
-            <UpdateSubProd
-              open={open}
-              setOpen={setOpen}
-              subProductID={subProductID}
-              subProductName={subProductName}
-              setSubProductName={setSubProductName}
-              buyingPrice={buyingPrice}
-              setBuyingPrice={setBuyingPrice}
-              sellingPrice={sellingPrice}
-              setSellingPrice={setSellingPrice}
-              gst={gst}
-              setGst={setGst}
-              discountPercent={discountPercent}
-              setDiscountPercent={setDiscountPercent}
-              MRP={MRP}
-              setMRP={setMRP}
-              productID={productID}
-              setProductID={setProductID}
-            />
-
-            <UpdateSubProductImage
-              openUpdateImgDial={openUpdateImgDial}
-              setOpenUpdateImgDial={setOpenUpdateImgDial}
-              photoOne={upPhotoOne}
-              photoTwo={upPhotoTwo}
-              upImageId={upImageId}
-            />
-            <Pagination page={page} setPage={(page) => setPage(page)} />
-          </div>
-        </div>
-      </AppLogout>
-    </>
+      <UpdateSubProductImage
+        openUpdateImgDial={openUpdateImgDial}
+        setOpenUpdateImgDial={setOpenUpdateImgDial}
+        photoOne={upPhotoOne}
+        photoTwo={upPhotoTwo}
+        upImageId={upImageId}
+      />
+      <Pagination page={page} setPage={(page) => setPage(page)} />
+    </Layout>
   );
 };
 

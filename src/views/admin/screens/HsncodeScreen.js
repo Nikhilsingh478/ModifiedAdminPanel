@@ -1,28 +1,12 @@
 import React, { useEffect } from "react";
-import AppLogout from "../../../AppLogout";
-import Sidebar from "../components/Sidebar";
-import {
-  Box,
-  Paper,
-  TableBody,
-  TableContainer,
-  Table,
-  TableHead,
-  TableRow,
-  TableCell,
-  CircularProgress,
-} from "@mui/material";
 import AddHSNcode from "../components/AddHSNcode";
 import { useDispatch, useSelector } from "react-redux";
 import { hsnCodeList } from "../../../redux/actions/admin/hsnCodeAction";
 import { formatDate } from '../../../helper/FormatDateTime';
 
-
-const columns = [
-  { id: "1", label: "#id", maxWidth: 20 },
-  { id: "2", label: "hSN Number", maxWidth: 50 },
-  { id: "3", label: "Date Added", maxWidth: 50 },
-];
+import Layout from "../../../components/layout/Layout";
+import PageHeader from "../../../components/common/PageHeader";
+import DataTable from "../../../components/common/DataTable";
 
 const HsncodeScreen = () => {
   const dispatch = useDispatch();
@@ -39,83 +23,26 @@ const HsncodeScreen = () => {
     dispatch(hsnCodeList());
   }, [addloading, dispatch]);
 
-  return (
-    <>
-      <AppLogout>
-        <Box>
-          <Sidebar />
-          <div
-            style={{
-              marginLeft: "16%",
-              marginTop: "-30px",
-            }}
-          >
-            <AddHSNcode />
-            <Box component="main" sx={{ flexGrow: 1, p: 1 }}>
-              <Paper
-                sx={{ width: "100%", overflow: "hidden", minHeight: "90vh" }}
-              >
-                {loading ? (
-                  <Box sx={{ display: "flex" }}>
-                    <CircularProgress
-                      style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        marginRight: "auto",
-                        marginLeft: "auto",
-                        height: "75vh",
-                      }}
-                    />
-                  </Box>
-                ) : (
-                  <>
-                    <TableContainer sx={{ mt: 2 }}>
-                      <Table stickyHeader aria-label="sticky table">
-                        <TableHead>
-                          <TableRow>
-                            {columns.map((column) => (
-                              <TableCell
-                                key={column.id}
-                                align={column.align}
-                                // style={{ maxWidth: column.maxWidth }}
-                                width={column.maxWidth}
-                              >
-                                {column.label}
-                              </TableCell>
-                            ))}
-                          </TableRow>
-                        </TableHead>
+  const columns = [
+    { label: "#id", field: "id" },
+    { label: "HSN Number", field: "hsnNumber" },
+    { label: "Date Added", field: "createdDateTime" },
+  ];
 
-                        <TableBody>
-                          {hsnCodes &&
-                            hsnCodes.map((cur, ind) => {
-                              return (
-                                <>
-                                  <TableRow
-                                    hover
-                                    role="checkbox"
-                                    tabIndex={-1}
-                                    key={cur.id}
-                                  >
-                                    <TableCell>{ind + 1}</TableCell>
-                                    <TableCell>{cur.hsnNumber}</TableCell>
-                                    <TableCell>{formatDate(cur.createdDateTime)}</TableCell>
-                                  </TableRow>
-                                </>
-                              );
-                            })}
-                        </TableBody>
-                      </Table>
-                    </TableContainer>
-                  </>
-                )}
-              </Paper>
-            </Box>
-          </div>
-        </Box>
-      </AppLogout>
-    </>
+  return (
+    <Layout>
+      <PageHeader title="Manage HSN Code" actionButton={<AddHSNcode />} />
+      <DataTable
+        columns={columns}
+        data={hsnCodes || []}
+        loading={loading}
+        renderCell={(row, col, rowIndex) => {
+          if (col.field === "id") return rowIndex + 1;
+          if (col.field === "createdDateTime") return formatDate(row.createdDateTime);
+          return row[col.field];
+        }}
+      />
+    </Layout>
   );
 };
 

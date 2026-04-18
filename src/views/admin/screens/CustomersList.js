@@ -1,13 +1,5 @@
 import React, { useEffect, useState } from "react";
-import Sidebar from "../components/Sidebar";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { CircularProgress, Box, Dialog } from "@mui/material";
+import { circularProgressClasses, Box, Dialog, CircularProgress } from "@mui/material";
 import toast, { Toaster } from "react-hot-toast";
 import {
   customerList,
@@ -16,9 +8,11 @@ import {
   clearErrors,
 } from "../../../redux/actions/admin/adminCustomerAction";
 import { useDispatch, useSelector } from "react-redux";
-import AppLogout from "../../../AppLogout";
-import CustomersNoti from "../components/CustomersNoti";
 import { formatDate } from "../../../helper/FormatDateTime";
+
+import Layout from "../../../components/layout/Layout";
+import PageHeader from "../../../components/common/PageHeader";
+import DataTable from "../../../components/common/DataTable";
 
 const CustomersList = () => {
   const dispatch = useDispatch();
@@ -76,94 +70,40 @@ const CustomersList = () => {
     }
   }, [dispatch, activeInactiveerror, activeInactivesuccess, customers]);
 
+  const columns = [
+    { label: "#id", field: "id" },
+    { label: "FullName", field: "fullName" },
+    { label: "EmailId", field: "emailId" },
+    { label: "MobileNo", field: "mobilenumber" },
+    { label: "Date Added", field: "createdDateTime" },
+  ];
+
+  const processedData = customers ? [...customers].reverse().filter((u) => u.fullName.toLowerCase().includes(search.toLowerCase())) : [];
+
   return (
-    <>
-      <AppLogout>
-        <div className="customerlist-section">
-          <div className="sidebar-div">
-            <Sidebar />
-          </div>
-
-          <div
-            style={{
-              marginLeft: "16%",
-            }}
-          >
-            <CustomersNoti users={inactiveUserList} setSearch={setSearch} />
-
-            <TableContainer
-              component={Paper}
-              style={{
-                margin: "1rem",
-              }}
-              sx={{ maxHeight: "680px", maxWidth: "98%" }}
-            >
-              <Table
-                style={{
-                  width: "95%",
-                }}
-                aria-label="a dense table"
-                stickyHeader
-              >
-                <div className="loading-style">
-                  {loading && (
-                    <>
-                      <Box sx={{ display: "flex" }}>
-                        <CircularProgress />
-                      </Box>
-                    </>
-                  )}
-                </div>
-                <TableHead>
-                  <TableRow>
-                    <TableCell size="small">#id</TableCell>
-                    <TableCell size="small">FullName</TableCell>
-                    <TableCell>EmailId</TableCell>
-                    <TableCell>MobileNo</TableCell>
-
-                    <TableCell>Date Added</TableCell>
-
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {customers
-                    ? customers
-                        .reverse()
-                        .filter((u) =>
-                          u.fullName
-                            .toLowerCase()
-                            .includes(search.toLowerCase())
-                        )
-                        .map((user, ind) => {
-                          return (
-                            <>
-                              <TableRow
-                                hover
-                                key={user.fullName}
-                                sx={{
-                                  "&:last-child td, &:last-child th": {
-                                    border: 0,
-                                  },
-                                }}
-                                // onClick={() => setOpen(true)}
-                              >
-                                <TableCell>{ind + 1}</TableCell>
-                                <TableCell>{user.fullName}</TableCell>
-                                <TableCell>{user.emailId}</TableCell>
-                                <TableCell>{user.mobilenumber}</TableCell>
-
-                                <TableCell>
-                                  {formatDate(user.createdDateTime)}
-                                </TableCell>
-                                
-                              </TableRow>
-                            </>
-                          );
-                        })
-                    : null}
-                </TableBody>
-              </Table>
-            </TableContainer>
+    <Layout>
+      <PageHeader 
+        title="Customers List" 
+        actionButton={
+          <input 
+            type="text" 
+            placeholder="Search User..." 
+            onChange={(e) => setSearch(e.target.value)} 
+            style={{ padding: "8px", borderRadius: "4px", border: "1px solid #ccc" }}
+          />
+        } 
+      />
+      
+      <DataTable
+        columns={columns}
+        data={processedData}
+        loading={loading}
+        renderCell={(row, col, rowIndex) => {
+          if (col.field === "id") return rowIndex + 1;
+          if (col.field === "createdDateTime") return formatDate(row.createdDateTime);
+          return row[col.field];
+        }}
+      />
 
             <Dialog open={open} onClose={() => setOpen(false)}>
               <div
@@ -203,10 +143,7 @@ const CustomersList = () => {
             </Dialog>
 
             <Toaster />
-          </div>
-        </div>
-      </AppLogout>
-    </>
+    </Layout>
   );
 };
 

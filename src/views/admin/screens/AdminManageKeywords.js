@@ -1,24 +1,18 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "../components/Sidebar";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
+import { IconButton } from "@mui/material";
 import EditIcon from "@mui/icons-material/Edit";
-import { Box, CircularProgress, IconButton } from "@mui/material";
 import AddKeywords from "../components/AddKeywords";
 import { keywordsList } from "../../../redux/actions/admin/ManageKeywordAction";
 import { useDispatch, useSelector } from "react-redux";
-import AppLogout from "../../../AppLogout";
 import { formatDate } from "../../../helper/FormatDateTime";
 import UpdateKeywords from "../components/UpdateKeywords";
 
+import Layout from "../../../components/layout/Layout";
+import PageHeader from "../../../components/common/PageHeader";
+import DataTable from "../../../components/common/DataTable";
+import StatusBadge from "../../../components/common/StatusBadge";
+
 const AdminManageKeywords = () => {
-
-
   const dispatch = useDispatch();
 
   const [open, setOpen] = useState(false);
@@ -33,10 +27,9 @@ const AdminManageKeywords = () => {
   const addKeywordsState = useSelector((state) => state.addKeywords);
   const { success } = addKeywordsState;
 
-    //update primary cate state
+  //update primary cate state
   const updateKeywordState = useSelector((state) => state.updateKey);
   const { updateSuccess } = updateKeywordState;
-
 
   const openModel = (id, keys) => {
     setOpen(true);
@@ -48,98 +41,43 @@ const AdminManageKeywords = () => {
     dispatch(keywordsList());
   }, [dispatch, success, updateSuccess]);
 
+  const columns = [
+    { label: "#id", field: "id" },
+    { label: "Keywords", field: "keywords" },
+    { label: "Date Added", field: "createdDateTime" },
+    { label: "Status", field: "status" },
+    { label: "Action", field: "action" },
+  ];
+
   return (
-    <>
-      <AppLogout>
-        <div className="dashboar-section">
-          <div className="sidebar-div">
-            <Sidebar />
-          </div>
+    <Layout>
+      <PageHeader title="Manage Keywords" actionButton={<AddKeywords />} />
 
-          <div
-            style={{
-              marginLeft: "16%",
-            }}
-          >
-            <AddKeywords />
+      <DataTable
+        columns={columns}
+        data={keywords || []}
+        loading={loading}
+        renderCell={(row, col, rowIndex) => {
+          if (col.field === "id") return rowIndex + 1;
+          if (col.field === "createdDateTime") return formatDate(row.createdDateTime);
+          if (col.field === "status") return <StatusBadge status={row.isActive === 1 ? "Active" : "DeActive"} />;
+          if (col.field === "action") return (
+            <IconButton aria-label="edit" color="primary">
+              <EditIcon onClick={() => openModel(row.id, row.keywords)} />
+            </IconButton>
+          );
+          return row[col.field];
+        }}
+      />
 
-            <TableContainer
-              component={Paper}
-              style={{
-                margin: "1rem",
-              }}
-              sx={{ maxHeight: "680px", maxWidth: "98%" }}
-            >
-              <Table
-                style={{
-                  width: "95%",
-                }}
-                stickyHeader
-                aria-label="sticky table"
-              >
-                <div className="loading-style">
-                  {loading && (
-                    <>
-                      <Box sx={{ display: "flex" }}>
-                        <CircularProgress />
-                      </Box>
-                    </>
-                  )}
-                </div>
-                <TableHead>
-                  <TableRow>
-                    <TableCell size="small">#id</TableCell>
-                    <TableCell size="small">Keywords</TableCell>
-                    <TableCell>Date Added</TableCell>
-                    <TableCell>Status</TableCell>
-                    <TableCell>Action</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {keywords &&
-                    keywords.map((cur, ind) => {
-                      return (
-                        <>
-                          <TableRow
-                            hover
-                            key={ind}
-                            sx={{
-                              "&:last-child td, &:last-child th": { border: 0 },
-                            }}
-                          >
-                            <TableCell>{ind + 1}</TableCell>
-
-                            <TableCell>{cur.keywords}</TableCell>
-                            <TableCell>
-                              {formatDate(cur.createdDateTime)}
-                            </TableCell>
-                            <TableCell>
-                              {cur.isActive === 1 ? "Active" : "DeActive"}
-                            </TableCell>
-                            <IconButton aria-label="edit" color="primary">
-                              <EditIcon
-                                onClick={() => openModel(cur.id, cur.keywords)}
-                              />
-                            </IconButton>
-                          </TableRow>
-                        </>
-                      );
-                    })}
-                </TableBody>
-              </Table>
-            </TableContainer>
-
-            <UpdateKeywords
-              open={open}
-              setOpen={setOpen}
-              updatekeyID={updatekeyID}
-              updatekeyText={updatekeyText}
-              setUpdatekeyText = {setUpdatekeyText}
-            />
-          </div>
-        </div>
-      </AppLogout>
-    </>
+      <UpdateKeywords
+        open={open}
+        setOpen={setOpen}
+        updatekeyID={updatekeyID}
+        updatekeyText={updatekeyText}
+        setUpdatekeyText={setUpdatekeyText}
+      />
+    </Layout>
   );
 };
 

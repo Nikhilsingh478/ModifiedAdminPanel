@@ -1,23 +1,19 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "../components/Sidebar";
 import { useHistory } from "react-router-dom";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { Box, CircularProgress, Button, Backdrop } from "@mui/material";
+import { Button, Backdrop, CircularProgress } from "@mui/material";
 import { ordersList } from "../../../redux/actions/admin/adminOrderAction";
 import { useDispatch, useSelector } from "react-redux";
-import AppLogout from "../../../AppLogout";
 import { formatDate } from "../../../helper/FormatDateTime";
 import Pagination from "../../Pagination";
 import CancelOrder from "../components/CancelOrder";
 import toast, { Toaster } from "react-hot-toast";
 import { clearErrors } from "../../../redux/actions/admin/adminOrderAction";
 import ChangeOrderStatus from "../components/ChangeOrderStatus";
+
+import Layout from "../../../components/layout/Layout";
+import PageHeader from "../../../components/common/PageHeader";
+import DataTable from "../../../components/common/DataTable";
+import StatusBadge from "../../../components/common/StatusBadge";
 
 const OrdersScreen = () => {
   const history = useHistory();
@@ -35,8 +31,7 @@ const OrdersScreen = () => {
 
   //update order status state
   const updateOrderState = useSelector((state) => state.changeOrderStatus);
-  const { changeStatusLoading, changeStatusSuccess, changeStatusError } =
-    updateOrderState;
+  const { changeStatusLoading, changeStatusSuccess, changeStatusError } = updateOrderState;
 
   useEffect(() => {
     dispatch(ordersList(page));
@@ -44,181 +39,79 @@ const OrdersScreen = () => {
 
   useEffect(() => {
     if (cancelError) {
-      toast.error("Something went wrong", {
-        position: "top-center",
-        duration: 3000,
-      });
+      toast.error("Something went wrong", { position: "top-center", duration: 3000 });
       dispatch(clearErrors());
     }
     if (cancelSuccess) {
-      toast.success("Order cancel success", {
-        position: "top-center",
-        duration: 3000,
-      });
-
+      toast.success("Order cancel success", { position: "top-center", duration: 3000 });
       dispatch({ type: "ORDER_CANCEL_RESET" });
     }
-
     if (changeStatusSuccess) {
-      toast.success("Status Updated success", {
-        position: "top-center",
-        duration: 3000,
-      });
-
+      toast.success("Status Updated success", { position: "top-center", duration: 3000 });
       dispatch({ type: "CHANGE_ORDERSTATUS_RESET" });
     }
-
     if (changeStatusError) {
-      toast.error("Something went wrong", {
-        position: "top-center",
-        duration: 3000,
-      });
+      toast.error("Something went wrong", { position: "top-center", duration: 3000 });
       dispatch(clearErrors());
     }
-  }, [
-    cancelSuccess,
-    cancelError,
-    changeStatusSuccess,
-    changeStatusError,
-    dispatch,
-  ]);
+  }, [cancelSuccess, cancelError, changeStatusSuccess, changeStatusError, dispatch]);
+
+  const columns = [
+    { label: "#id", field: "id" },
+    { label: "Order Id", field: "orderId" },
+    { label: "Time", field: "dateTime" },
+    { label: "Status", field: "orderStatus" },
+    { label: "Amount", field: "amount" },
+    { label: "Change Status", field: "changeStatus" },
+    { label: "Cancel", field: "cancel" },
+    { label: "Invoice", field: "invoice" },
+    { label: "Details", field: "details" },
+  ];
 
   return (
-    <>
-      <AppLogout>
-        <div className="dashboar-section">
-          <div className="sidebar-div">
-            <Sidebar />
-          </div>
+    <Layout>
+      <PageHeader title="Orders List" />
+      
+      <Backdrop sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }} open={calncelLoading || changeStatusLoading}>
+        <CircularProgress color="inherit" />
+      </Backdrop>
 
-          <div
-            style={{
-              marginLeft: "16%",
-            }}
-          >
-            {/* <AddBrand /> */}
-
-            <TableContainer
-              component={Paper}
-              style={{
-                margin: "1rem",
-              }}
-              sx={{ maxHeight: "680px", maxWidth: "98%" }}
+      <DataTable
+        columns={columns}
+        data={orders || []}
+        loading={loading}
+        renderCell={(row, col, rowIndex) => {
+          if (col.field === "id") return rowIndex + 1;
+          if (col.field === "dateTime") return formatDate(row.dateTime);
+          if (col.field === "orderStatus") return <StatusBadge status={row.orderStatus} />;
+          if (col.field === "amount") return `₹ ${Math.round(row.totalPrice * 100) / 100}`;
+          if (col.field === "changeStatus") return <ChangeOrderStatus orderId={row.orderId} />;
+          if (col.field === "cancel") return <CancelOrder orderId={row.orderId} />;
+          if (col.field === "invoice") return (
+            <Button
+              size="small"
+              variant="outlined"
+              onClick={() => history.push({ pathname: `/admin/invoice/${row.orderId}`, state: { date: row.dateTime } })}
             >
-              <Table
-                style={{
-                  width: "95%",
-                }}
-                stickyHeader
-                aria-label="sticky table"
-              >
-                <div className="loading-style">
-                  <Backdrop
-                    sx={{
-                      color: "#fff",
-                      zIndex: (theme) => theme.zIndex.drawer + 1,
-                    }}
-                    open={calncelLoading || changeStatusLoading}
-                  >
-                    <CircularProgress color="inherit" />
-                  </Backdrop>
-
-                  {loading && (
-                    <>
-                      <Box sx={{ display: "flex" }}>
-                        <CircularProgress />
-                      </Box>
-                    </>
-                  )}
-                </div>
-                <TableHead>
-                  <TableRow>
-                    <TableCell size="small">#id</TableCell>
-                    {/* <TableCell size="small">OrderId</TableCell> */}
-                    <TableCell>Order Id</TableCell>
-                    <TableCell>Time</TableCell>
-                    <TableCell>Status</TableCell>
-                    <TableCell>Amount</TableCell>
-                    <TableCell>Change Status</TableCell>
-                    <TableCell>Cancel</TableCell>
-                    <TableCell>Invoice </TableCell>
-                    <TableCell>Details</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {orders &&
-                    orders.map((cur, ind) => {
-                      return (
-                        <>
-                          <TableRow
-                            hover
-                            key={cur.orderId}
-                            sx={{
-                              "&:last-child td, &:last-child th": { border: 0 },
-                            }}
-                          >
-                            <TableCell>{ind + 1}</TableCell>
-
-                            <TableCell>{cur.orderId}</TableCell>
-                            <TableCell>{formatDate(cur.dateTime)}</TableCell>
-                            <TableCell>{cur.orderStatus}</TableCell>
-                            <TableCell>
-                              {" "}
-                              ₹ {Math.round(cur.totalPrice * 100) / 100}
-                            </TableCell>
-                            <TableCell>
-                              <ChangeOrderStatus orderId={cur.orderId} />
-                            </TableCell>
-                            <TableCell>
-                              <CancelOrder orderId={cur.orderId} />
-                            </TableCell>
-                            <TableCell>
-                              <Button
-                                size="small"
-                                variant="outlined"
-                                onClick={() =>
-                                  history.push({
-                                    pathname: `/admin/invoice/${cur.orderId}`,
-                                    state: {
-                                      // status: cur.orderStatus,
-                                      date: cur.dateTime,
-                                    },
-                                  })
-                                }
-                              >
-                                Invoice
-                              </Button>
-                            </TableCell>
-                            <TableCell>
-                              <Button
-                                size="small"
-                                variant="outlined"
-                                onClick={() =>
-                                  history.push({
-                                    pathname: `/admin/order/${cur.orderId}`,
-                                    state: {
-                                      status: cur.orderStatus,
-                                      date: cur.dateTime,
-                                    },
-                                  })
-                                }
-                              >
-                                Details
-                              </Button>
-                            </TableCell>
-                          </TableRow>
-                        </>
-                      );
-                    })}
-                </TableBody>
-              </Table>
-            </TableContainer>
-          </div>
-          <Pagination page={page} setPage={(page) => setPage(page)} />
-        </div>
-      </AppLogout>
+              Invoice
+            </Button>
+          );
+          if (col.field === "details") return (
+            <Button
+              size="small"
+              variant="outlined"
+              onClick={() => history.push({ pathname: `/admin/order/${row.orderId}`, state: { status: row.orderStatus, date: row.dateTime } })}
+            >
+              Details
+            </Button>
+          );
+          return row[col.field];
+        }}
+      />
+      
+      <Pagination page={page} setPage={(page) => setPage(page)} />
       <Toaster />
-    </>
+    </Layout>
   );
 };
 

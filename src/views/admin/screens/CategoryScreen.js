@@ -1,12 +1,4 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "../components/Sidebar";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import { Box, CircularProgress, IconButton, Typography } from "@mui/material";
 import AddCategory from "../components/AddCategory";
 import { categoryList } from "../../../redux/actions/admin/categoryAction";
@@ -14,12 +6,16 @@ import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Pagination from "../../Pagination";
-import AppLogout from "../../../AppLogout";
 import EditIcon from "@mui/icons-material/Edit";
 import UpdateCategory from "../components/UpdateCategory";
 import { formatDate } from "../../../helper/FormatDateTime";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import CategoryImageUpdate from "../components/CategoryImageUpdate";
+
+import Layout from "../../../components/layout/Layout";
+import PageHeader from "../../../components/common/PageHeader";
+import DataTable from "../../../components/common/DataTable";
+import StatusBadge from "../../../components/common/StatusBadge";
 
 const CategoryScreen = () => {
   const dispatch = useDispatch();
@@ -70,185 +66,98 @@ const CategoryScreen = () => {
     dispatch(categoryList(page));
   }, [page, success, updateSuccess, updateImgSuccess, dispatch]);
 
+  const columns = [
+    { label: "#id", field: "id" },
+    { label: "image", field: "image" },
+    { label: "Category Name", field: "categoryName" },
+    { label: "Status", field: "status" },
+    { label: "Date Added", field: "createdDateTime" },
+    { label: "Action", field: "action" },
+    { label: "Expands", field: "expands" },
+  ];
+
   return (
-    <>
-      <AppLogout>
-        <div className="dashboar-section">
-          <div className="sidebar-div">
-            <Sidebar />
-          </div>
+    <Layout>
+      <PageHeader 
+        title="Category List" 
+        actionButton={<AddCategory />} 
+      />
 
-          <div
-            style={{
-              marginLeft: "16%",
-            }}
-          >
-            <AddCategory />
-
-            <TableContainer
-              component={Paper}
+      <DataTable
+        columns={columns}
+        data={category || []}
+        loading={loading}
+        renderCell={(row, col, rowIndex) => {
+          if (col.field === "id") return rowIndex + 1;
+          if (col.field === "image") return (
+            <div
               style={{
-                margin: "1rem",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "center",
               }}
-              sx={{ maxHeight: "680px", maxWidth: "98%" }}
             >
-              <Table aria-label="a dense table" stickyHeader>
-                <div className="loading-style">
-                  {loading && (
-                    <>
-                      <Box sx={{ display: "flex" }}>
-                        <CircularProgress />
-                      </Box>
-                    </>
-                  )}
-                </div>
-                <TableHead>
-                  <TableRow>
-                    <TableCell size="small">#id</TableCell>
-                    <TableCell size="small">image</TableCell>
-                    <TableCell>Category Name</TableCell>
-                    <TableCell>Status</TableCell>
-                    <TableCell>Date Added</TableCell>
-                    <TableCell size="small">Action</TableCell>
-                    <TableCell size="small">Expands</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {category &&
-                    category.map((cur, ind) => {
-                      return (
-                        <>
-                          <TableRow
-                            key={ind}
-                            hover
-                            sx={{
-                              "&:last-child td, &:last-child th": { border: 0 },
-                            }}
-                          >
-                            <TableCell>{ind + 1}</TableCell>
-                            <TableCell
-                              style={{
-                                cursor: "pointer",
-                              }}
-                              // onClick={() =>
-                              //   history.push(
-                              //     `/admin/category/${cur.primaryCategory.id}`
-                              //   )
-                              // }
-                            >
-                              <div
-                                style={{
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  justifyContent: "center",
-                                }}
-                              >
-                                <img
-                                  src={cur.imagePath}
-                                  alt={cur.primaryCategory.primaryCategoryName}
-                                  style={{
-                                    width: "50px",
-                                    height: "50px",
-                                  }}
-                                  onClick={() =>
-                                history.push(
-                                  `/admin/category/${cur.primaryCategory.id}`
-                                )
-                              }
-                                />
-                                <VisibilityIcon
-                                  sx={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    marginTop: "6px",
-                                    marginLeft: "10%",
-                                  }}
-                                  onClick={() =>
-                                    openUpdateImgModel(cur.imagePath, cur.id)
-                                  }
-                                />
-                              </div>
-                            </TableCell>
-                            <TableCell
-                              onClick={() =>
-                                history.push(
-                                  `/admin/category/${cur.primaryCategory.id}`
-                                )
-                              }
-                             >
-                              {cur.primaryCategory.primaryCategoryName}
-                              
-                            </TableCell>
+              <img
+                src={row.imagePath}
+                alt={row.primaryCategory.primaryCategoryName}
+                style={{ width: "50px", height: "50px", cursor: "pointer" }}
+                onClick={() => history.push(`/admin/category/${row.primaryCategory.id}`)}
+              />
+              <VisibilityIcon
+                sx={{
+                  display: "flex",
+                  justifyContent: "center",
+                  alignItems: "center",
+                  marginTop: "6px",
+                  marginLeft: "10%",
+                  cursor: "pointer"
+                }}
+                onClick={() => openUpdateImgModel(row.imagePath, row.id)}
+              />
+            </div>
+          );
+          if (col.field === "categoryName") return (
+            <div onClick={() => history.push(`/admin/category/${row.primaryCategory.id}`)} style={{ cursor: "pointer" }}>
+              {row.primaryCategory.primaryCategoryName}
+            </div>
+          );
+          if (col.field === "status") return (
+            <StatusBadge status={row.isActive === 1 ? "Active" : "Deactive"} />
+          );
+          if (col.field === "createdDateTime") return formatDate(row.createdDateTime);
+          if (col.field === "action") return (
+            <IconButton aria-label="edit" color="primary">
+              <EditIcon
+                onClick={() => openModel(row.primaryCategory.id, row.primaryCategory.primaryCategoryName)}
+              />
+            </IconButton>
+          );
+          if (col.field === "expands") return (
+            <div onClick={() => history.push(`/admin/category/${row.primaryCategory.id}`)} style={{ cursor: "pointer" }}>
+              <ArrowForwardIosIcon />
+            </div>
+          );
+          return row[col.field];
+        }}
+      />
 
-                            <TableCell>
-                              <Typography>
-                                {cur.isActive === 1 ? "Active" : "Deactive"}
-                              </Typography>
-                            </TableCell>
+      <UpdateCategory
+        open={open}
+        setOpen={setOpen}
+        updateCategoryId={updateCategoryId}
+        categoryName={categoryName}
+        setCategoryName={setCategoryName}
+      />
 
-                            <TableCell>
-                              {/* {cur.createdDateTime} */}
-                              {formatDate(cur.createdDateTime)}
-                            </TableCell>
+      <CategoryImageUpdate
+        openUpdateImgDial={openUpdateImgDial}
+        setOpenUpdateImgDial={setOpenUpdateImgDial}
+        photo={upPhoto}
+        upImageId={upImageId}
+      />
 
-                            <TableCell size="small">
-                              <IconButton aria-label="edit" color="primary">
-                                <EditIcon
-                                  onClick={() =>
-                                    openModel(
-                                      cur.primaryCategory.id,
-                                      cur.primaryCategory.primaryCategoryName
-                                    )
-                                  }
-                                />
-                              </IconButton>
-
-                              {/* <IconButton aria-label="delete" color="error">
-                                <DeleteIcon />
-                              </IconButton> */}
-                            </TableCell>
-                            <TableCell
-                              align="center"
-                              style={{
-                                cursor: "pointer",
-                              }}
-                              onClick={() =>
-                                history.push(
-                                  `/admin/category/${cur.primaryCategory.id}`
-                                )
-                              }
-                            >
-                              <ArrowForwardIosIcon />
-                            </TableCell>
-                          </TableRow>
-                        </>
-                      );
-                    })}
-                </TableBody>
-              </Table>
-            </TableContainer>
-
-            <UpdateCategory
-              open={open}
-              setOpen={setOpen}
-              updateCategoryId={updateCategoryId}
-              categoryName={categoryName}
-              setCategoryName={setCategoryName}
-            />
-
-            <CategoryImageUpdate
-              openUpdateImgDial={openUpdateImgDial}
-              setOpenUpdateImgDial={setOpenUpdateImgDial}
-              photo={upPhoto}
-              upImageId={upImageId}
-            />
-
-            <Pagination page={page} setPage={(page) => setPage(page)} />
-          </div>
-        </div>
-      </AppLogout>
-    </>
+      <Pagination page={page} setPage={(page) => setPage(page)} />
+    </Layout>
   );
 };
 

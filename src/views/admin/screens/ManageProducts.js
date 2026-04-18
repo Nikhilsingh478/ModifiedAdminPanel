@@ -1,25 +1,19 @@
 import React, { useState, useEffect } from "react";
-import Sidebar from "../components/Sidebar";
-import Table from "@mui/material/Table";
-import TableBody from "@mui/material/TableBody";
-import TableCell from "@mui/material/TableCell";
-import TableContainer from "@mui/material/TableContainer";
-import TableHead from "@mui/material/TableHead";
-import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
-import { Box, CircularProgress, IconButton } from "@mui/material";
+import { IconButton } from "@mui/material";
 import { useHistory, useParams } from "react-router-dom";
 import AddProduct from "../components/AddProduct";
 import { useDispatch, useSelector } from "react-redux";
 import { adminProductList } from "../../../redux/actions/admin/adminProductAction";
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 import Pagination from "../../Pagination";
-import AppLogout from "../../../AppLogout";
 import EditIcon from "@mui/icons-material/Edit";
 import UpdateProd from "../components/UpdateProd";
 import VisibilityIcon from "@mui/icons-material/Visibility";
 import UpdateProdImage from "../components/UpdateProdImage";
 
+import Layout from "../../../components/layout/Layout";
+import PageHeader from "../../../components/common/PageHeader";
+import DataTable from "../../../components/common/DataTable";
 
 const ManageProducts = () => {
   const history = useHistory();
@@ -29,9 +23,9 @@ const ManageProducts = () => {
   const [open, setOpen] = useState(false);
   const [productId, setProductId] = useState("");
   const [productName, setProductName] = useState("");
-  const [brandID, setBrandID] = useState("")
+  const [brandID, setBrandID] = useState("");
   const [keywordID, setkeywordID] = useState("");
-  const [HSNCodeID, setHSNCodeID] = useState("")
+  const [HSNCodeID, setHSNCodeID] = useState("");
   const [openUpdateImgDial, setOpenUpdateImgDial] = useState(false);
   const [upPhoto, setUpPhoto] = useState("");
   const [upImageId, setUpImageId] = useState("");
@@ -52,10 +46,9 @@ const ManageProducts = () => {
 
   //updateProdImg
   const updateProdImgState = useSelector((state) => state.updateProdImg);
-  const {  updateImgSuccess} = updateProdImgState;
+  const { updateImgSuccess } = updateProdImgState;
 
-  //open model to set the current click product id
-  const openModel = (prodID, prodName,brand,keyID,hsnID) => {
+  const openModel = (prodID, prodName, brand, keyID, hsnID) => {
     setOpen(true);
     setProductId(prodID);
     setProductName(prodName);
@@ -64,206 +57,99 @@ const ManageProducts = () => {
     setHSNCodeID(hsnID);
   };
 
-   //open update image dial box
   const openUpdateImgModel = (photo, id) => {
     setUpImageId(id);
     setOpenUpdateImgDial(true);
     setUpPhoto(photo);
   };
 
-  //load the list
   useEffect(() => {
     dispatch(adminProductList(id, page));
   }, [dispatch, id, page, success, updateSuccess, updateImgSuccess]);
+
+  const columns = [
+    { label: "#id", field: "id" },
+    { label: "Image", field: "image" },
+    { label: "Product Name", field: "productName" },
+    { label: "Subcategory Name", field: "subCategoryName" },
+    { label: "Brand Name", field: "brandName" },
+    { label: "Action", field: "action" },
+    { label: "Expands", field: "expands" },
+  ];
+
   return (
-    <>
-      <AppLogout>
-        <div className="dashboar-section">
-          <div className="sidebar-div">
-            <Sidebar />
-          </div>
+    <Layout>
+      <PageHeader title="Manage Products" actionButton={<AddProduct />} />
+      <DataTable
+        columns={columns}
+        data={adminProd || []}
+        loading={loading}
+        renderCell={(row, col, rowIndex) => {
+          if (col.field === "id") return rowIndex + 1;
+          if (col.field === "image") return (
+            <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
+              <img
+                src={row.imagePath}
+                alt={row.product.productName}
+                style={{ width: "50px", height: "50px", cursor: "pointer" }}
+                onClick={() => history.push(`/admin/manage_subproducts/${row.product.id}`)}
+              />
+              <VisibilityIcon
+                onClick={() => openUpdateImgModel(row.imagePath, row.id)}
+                sx={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "6px", marginLeft: "10%", cursor: "pointer" }}
+              />
+            </div>
+          );
+          if (col.field === "productName") return (
+            <div onClick={() => history.push(`/admin/manage_subproducts/${row.product.id}`)} style={{ cursor: "pointer" }}>
+              {row.product.productName}
+            </div>
+          );
+          if (col.field === "subCategoryName") return (
+            <div onClick={() => history.push(`/admin/manage_subproducts/${row.product.id}`)} style={{ cursor: "pointer" }}>
+              {row.product.subCategory.subCategoryName}
+            </div>
+          );
+          if (col.field === "brandName") return row.product.brand.brandName;
+          if (col.field === "action") return (
+            <IconButton aria-label="edit" color="primary">
+              <EditIcon onClick={() => openModel(row.product.id, row.product.productName, row.product.brand.id, row.product.keyword.id, row.product.hsn.id)} />
+            </IconButton>
+          );
+          if (col.field === "expands") return (
+            <div onClick={() => history.push(`/admin/manage_subproducts/${row.product.id}`)} style={{ cursor: "pointer", textAlign: "center" }}>
+              <ArrowForwardIosIcon />
+            </div>
+          );
+          return row[col.field];
+        }}
+      />
 
-          <div
-            style={{
-              marginLeft: "16%",
-            }}
-          >
-            <AddProduct />
+      <UpdateProd
+        open={open}
+        setOpen={setOpen}
+        prodID={productId}
+        productName={productName}
+        setProductName={setProductName}
+        subCateID={subCateID}
+        setsubCateID={setsubCateID}
+        brandID={brandID}
+        setBrandID={setBrandID}
+        keywordID={keywordID}
+        setkeywordID={setkeywordID}
+        HSNCodeID={HSNCodeID}
+        setHSNCodeID={setHSNCodeID}
+      />
 
-            <TableContainer
-              component={Paper}
-              style={{
-                margin: "1rem",
-              }}
-              sx={{ maxHeight: "680px", maxWidth: "98%" }}
-            >
-              <Table
-                style={{
-                  width: "95%",
-                }}
-                stickyHeader
-                aria-label="sticky table"
-              >
-                <div className="loading-style">
-                  {loading && (
-                    <>
-                      <Box sx={{ display: "flex" }}>
-                        <CircularProgress />
-                      </Box>
-                    </>
-                  )}
-                </div>
-                <TableHead>
-                  <TableRow>
-                    <TableCell size="small">#id</TableCell>
-                    <TableCell>image</TableCell>
-                    <TableCell size="small">productName</TableCell>
-                    <TableCell>subCategoryName</TableCell>
-                    <TableCell>BrandName</TableCell>
-                    <TableCell>Action</TableCell>
-                    <TableCell>Expands</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {adminProd &&
-                    adminProd.map((cur, ind) => {
-                      return (
-                        <>
-                          <TableRow
-                            hover
-                            key={ind}
-                            sx={{
-                              "&:last-child td, &:last-child th": { border: 0 },
-                            }}
-                          >
-                            <TableCell>{ind + 1}</TableCell>
+      <UpdateProdImage
+        openUpdateImgDial={openUpdateImgDial}
+        setOpenUpdateImgDial={setOpenUpdateImgDial}
+        photo={upPhoto}
+        upImageId={upImageId}
+      />
 
-                            <TableCell  style={{
-                                cursor: "pointer",
-                              }}
-                              // onClick={() =>
-                              //   history.push(
-                              //     `/admin/manage_subproducts/${cur.product.id}`
-                              //   )}
-                                >
-                                <div
-                                style={{
-                                  display: "flex",
-                                  flexDirection: "column",
-                                  justifyContent: "center",
-                                }}
-                              >
-                              <img
-                                src={cur.imagePath}
-                                alt={cur.product.productName}
-                                style={{
-                                  width: "50px",
-                                  height: "50px",
-                                }}
-                                onClick={() =>
-                                history.push(
-                                  `/admin/manage_subproducts/${cur.product.id}`
-                                )
-                              }
-                              />
-
-                                <VisibilityIcon
-                                  onClick={() =>
-                                    openUpdateImgModel(cur.imagePath, cur.id)
-                                  }
-                                  sx={{
-                                    display: "flex",
-                                    justifyContent: "center",
-                                    alignItems: "center",
-                                    marginTop: "6px",
-                                    marginLeft: "10%",
-                                  }}
-                                />
-                              </div>
-                            </TableCell>
-                            <TableCell
-                               onClick={() =>
-                                history.push(
-                                  `/admin/manage_subproducts/${cur.product.id}`
-                                )
-                              }
-                            >{cur.product.productName}</TableCell>
-
-                            <TableCell
-                               onClick={() =>
-                                history.push(
-                                  `/admin/manage_subproducts/${cur.product.id}`
-                                )
-                              }
-                            >
-                              {cur.product.subCategory.subCategoryName}
-                            </TableCell>
-                            <TableCell>{cur.product.brand.brandName}</TableCell>
-                            <TableCell>
-                              <IconButton aria-label="edit" color="primary">
-                                <EditIcon
-                                  onClick={() =>
-                                    openModel(
-                                      cur.product.id,
-                                      cur.product.productName,
-                                      cur.product.brand.id,
-                                      cur.product.keyword.id,
-                                      cur.product.hsn.id
-                                    )
-                                  }
-                                />
-                              </IconButton>
-                            </TableCell>
-                            <TableCell
-                              align="center"
-                              style={{
-                                cursor: "pointer",
-                              }}
-                              onClick={() =>
-                                history.push(
-                                  `/admin/manage_subproducts/${cur.product.id}`
-                                )
-                              }
-                            >
-                              <ArrowForwardIosIcon />
-                            </TableCell>
-                          </TableRow>
-                        </>
-                      );
-                    })}
-                </TableBody>
-              </Table>
-            </TableContainer>
-
-            <UpdateProd
-              open={open}
-              setOpen={setOpen}
-              prodID={productId}
-              productName={productName}
-              setProductName={setProductName}
-              subCateID={subCateID}
-              setsubCateID={setsubCateID}
-              brandID = {brandID}
-              setBrandID={setBrandID }
-              keywordID={keywordID}
-              setkeywordID={setkeywordID}
-              HSNCodeID={HSNCodeID}
-              setHSNCodeID={setHSNCodeID}
-            />
-
-            <UpdateProdImage
-              openUpdateImgDial={openUpdateImgDial}
-              setOpenUpdateImgDial={setOpenUpdateImgDial}
-              photo={upPhoto}
-              upImageId={upImageId}
-            />
-
-            <Pagination page={page} setPage={(page) => setPage(page)} />
-
-          </div>
-        </div>
-      </AppLogout>
-    </>
+      <Pagination page={page} setPage={(page) => setPage(page)} />
+    </Layout>
   );
 };
 
