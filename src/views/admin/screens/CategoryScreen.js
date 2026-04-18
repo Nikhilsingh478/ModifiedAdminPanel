@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Box, CircularProgress, IconButton, Typography } from "@mui/material";
+import { IconButton } from "@mui/material";
 import AddCategory from "../components/AddCategory";
 import { categoryList } from "../../../redux/actions/admin/categoryAction";
 import { useDispatch, useSelector } from "react-redux";

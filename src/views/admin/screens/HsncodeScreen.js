@@ -15,10 +15,7 @@ const HsncodeScreen = () => {
   const hsnCodeState = useSelector((state) => state.hsncodeList);
   const { loading, hsnCodes } = hsnCodeState;
 
-  //add HSN state
-  const addHsnCodeState = useSelector((state) => state.addHSN);
-  const { addloading } = addHsnCodeState;
-
+  
   useEffect(() => {
     dispatch(hsnCodeList());
   }, [dispatch]);

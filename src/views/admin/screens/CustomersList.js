@@ -1,10 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { Box, Dialog, CircularProgress, OutlinedInput } from "@mui/material";
+import { OutlinedInput } from "@mui/material";
 import toast, { Toaster } from "react-hot-toast";
 import {
   customerList,
-  activeInactiveUser,
-  customerImg,
   clearErrors,
 } from "../../../redux/actions/admin/adminCustomerAction";
 import { useDispatch, useSelector } from "react-redux";
@@ -17,15 +15,11 @@ import DataTable from "../../../components/common/DataTable";
 const CustomersList = () => {
   const dispatch = useDispatch();
   const [search, setSearch] = useState("");
-  const [open, setOpen] = useState(false);
   //customer state
   const customerState = useSelector((state) => state.customersList);
   const { loading, customers } = customerState;
 
-  //customer img state
-  const customerImage = useSelector((state) => state.customerImgData);
-  const { customerImages, loadingImages } = customerImage;
-
+  
   //active inactive user state
   const activeInactiveState = useSelector(
     (state) => state.activeInactiveCustomer
@@ -33,12 +27,7 @@ const CustomersList = () => {
   const { activeInactivesuccess, activeInactiveerror } = activeInactiveState;
 
   
-  //customer img
-  const viewCustomerImg = async (id) => {
-    setOpen(true);
-    dispatch(customerImg(id));
-  };
-
+  
   useEffect(() => {
     dispatch(customerList());
     if (activeInactiveerror) {
@@ -90,44 +79,7 @@ const CustomersList = () => {
         }}
       />
 
-            <Dialog open={open} onClose={() => setOpen(false)}>
-              <div
-                style={{
-                  margin: "1.5rem",
-                }}
-              >
-                {" "}
-                <div className="loading-style">
-                  {loadingImages && (
-                    <>
-                      <Box sx={{ display: "flex" }}>
-                        <CircularProgress />
-                      </Box>
-                    </>
-                  )}
-                </div>
-                {customerImages
-                  ? customerImages.map((cur) => {
-                      return (
-                        <>
-                          <Box m={2}>
-                            <img
-                              src={`data:image;base64,${cur.photo}`}
-                              alt="user-img"
-                              style={{
-                                width: "400px",
-                                height: "200px",
-                              }}
-                            />
-                          </Box>
-                        </>
-                      );
-                    })
-                  : null}
-              </div>
-            </Dialog>
-
-            <Toaster />
+      <Toaster />
     </Layout>
   );
 };
