@@ -10,7 +10,6 @@ import {
   Divider,
   keyframes,
   IconButton,
-  useTheme,
 } from "@mui/material";
 import CategoryIcon from "@mui/icons-material/Category";
 import AddIcon from "@mui/icons-material/Add";
@@ -22,17 +21,6 @@ import { Link, useLocation } from "react-router-dom";
 import { Avatar } from "@mui/material";
 
 // Animation definitions
-const slideInLeft = keyframes`
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-`;
-
 const fadeInScale = keyframes`
   from {
     opacity: 0;
@@ -56,7 +44,6 @@ export const sidebarNavigationData = [
 
 const Sidebar = ({ mobileOpen, handleDrawerToggle, drawerWidth }) => {
   const location = useLocation();
-  const theme = useTheme();
   const [hasAnimated, setHasAnimated] = useState(() => {
     // Check if animations have already run in this session
     return sessionStorage.getItem('sidebarAnimated') === 'true';

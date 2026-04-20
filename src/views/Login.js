@@ -2,11 +2,9 @@ import React, { useState, useEffect } from "react";
 import { loginUser } from "../redux/actions/userAction";
 import { useSelector, useDispatch } from "react-redux";
 import {
-  Container,
   TextField,
   Button,
   Box,
-  Backdrop,
   CircularProgress,
   Typography,
   Avatar,
@@ -14,11 +12,8 @@ import {
 } from "@mui/material";
 import CssBaseline from "@mui/material/CssBaseline";
 import toast, { Toaster } from "react-hot-toast";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
-import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import { styled } from "@mui/material/styles";
-
-const theme = createTheme();
+import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 
 // Full viewport glassmorphic background
 const GlassBackground = styled('div')({
