@@ -33,7 +33,7 @@ const Layout = ({ children }) => {
           <Box 
             className="layout-content" 
             sx={{ 
-              p: { xs: 2, md: 4 }, 
+              p: { xs: 1.25, sm: 2, md: 4 }, 
               flexGrow: 1, 
               overflowX: "hidden",
               animation: 'fadeIn 0.3s ease-in'

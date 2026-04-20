@@ -26,8 +26,8 @@ import { ColorModeContext } from "../../ThemeContext";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: '6px',
-  backgroundColor: '#1B1F26',
-  border: '1px solid #2A2F3A',
+  backgroundColor: theme.palette.mode === "light" ? "#FFFFFF" : "#1B1F26",
+  border: `1px solid ${theme.palette.divider}`,
   marginRight: theme.spacing(2),
   width: "100%",
   [theme.breakpoints.up("sm")]: {
@@ -38,12 +38,12 @@ const Search = styled("div")(({ theme }) => ({
   alignItems: "center",
   transition: 'all 0.2s ease',
   '&:focus-within': {
-    borderColor: '#A7F3D0',
+    borderColor: theme.palette.mode === "light" ? "#10B981" : "#A7F3D0",
   },
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: '#E5E7EB',
+  color: theme.palette.text.primary,
   "& .MuiInputBase-input": {
     padding: theme.spacing(1.2, 1.2, 1.2, 0),
     paddingLeft: `calc(1em + ${theme.spacing(1.5)})`,
@@ -54,7 +54,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
       width: "24ch",
     },
     '&::placeholder': {
-      color: '#9CA3AF',
+      color: theme.palette.text.secondary,
       opacity: 0.7,
     },
   },
@@ -79,20 +79,21 @@ const Topbar = ({ handleDrawerToggle }) => {
       position="static"
       elevation={0}
       sx={{
-        bgcolor: '#15181D',
-        color: '#E5E7EB',
-        borderBottom: '1px solid #2A2F3A',
+        bgcolor: "background.paper",
+        color: "text.primary",
+        borderBottom: "1px solid",
+        borderColor: "divider",
         zIndex: 1100,
       }}
     >
-      <Toolbar>
+      <Toolbar sx={{ minHeight: { xs: 58, sm: 64 }, px: { xs: 1, sm: 2 } }}>
         <IconButton
           color="inherit"
           aria-label="open drawer"
           edge="start"
           onClick={handleDrawerToggle}
           sx={{ 
-            mr: 2, 
+            mr: { xs: 0.5, sm: 2 }, 
             display: { md: "none" },
             transition: 'all 0.2s ease',
             '&:hover': {
@@ -107,13 +108,13 @@ const Topbar = ({ handleDrawerToggle }) => {
         <Typography
           variant="h6"
           component="div"
-          sx={{ flexGrow: 0, display: { xs: "none", sm: "block" }, px: 2 }}
+          sx={{ flexGrow: 0, display: { xs: "none", sm: "block" }, px: { sm: 1, md: 2 } }}
         >
           <Link to="/admin/dashboard">
             <Box
               component="img"
               sx={{ 
-                height: 40,
+                height: { sm: 34, md: 40 },
                 transition: 'all 0.2s ease',
                 '&:hover': {
                   transform: 'scale(1.05)'
@@ -137,7 +138,7 @@ const Topbar = ({ handleDrawerToggle }) => {
 
         <Box sx={{ flexGrow: 1 }} />
 
-        <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+        <Box sx={{ display: "flex", alignItems: "center", gap: { xs: 0.4, sm: 1.25, md: 2 } }}>
           <IconButton 
             onClick={colorMode.toggleColorMode} 
             color="inherit"
@@ -150,6 +151,7 @@ const Topbar = ({ handleDrawerToggle }) => {
 
           <IconButton 
             color="inherit"
+            sx={{ display: { xs: "none", sm: "inline-flex" } }}
           >
             <Badge 
               badgeContent={0} 
@@ -163,14 +165,14 @@ const Topbar = ({ handleDrawerToggle }) => {
             onClick={handleMenu} 
             color="inherit" 
             sx={{ 
-              p: 0.5,
+              p: { xs: 0.25, sm: 0.5 },
             }}
           >
             <Avatar 
               src="/images/cropped_circle_image.webp" 
               sx={{ 
-                width: 32, 
-                height: 32, 
+                width: { xs: 30, sm: 32 }, 
+                height: { xs: 30, sm: 32 }, 
               }} 
             />
           </IconButton>
@@ -185,10 +187,10 @@ const Topbar = ({ handleDrawerToggle }) => {
               sx: {
                 mt: 1.5,
                 borderRadius: '16px',
-                background: 'rgba(27, 31, 38, 0.95)',
-                backdropFilter: 'blur(20px)',
-                border: '1px solid #2A2F3A',
-                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
+                background: theme.palette.mode === "light" ? "rgba(255, 255, 255, 0.96)" : "rgba(27, 31, 38, 0.95)",
+                backdropFilter: "blur(14px)",
+                border: `1px solid ${theme.palette.divider}`,
+                boxShadow: theme.palette.mode === "light" ? "0 10px 26px rgba(15, 23, 42, 0.12)" : "0 8px 32px rgba(0, 0, 0, 0.4)",
                 minWidth: 180,
                 '& .MuiList-root': {
                   padding: '8px',
@@ -204,12 +206,12 @@ const Topbar = ({ handleDrawerToggle }) => {
                 my: 0.5,
                 transition: 'all 0.3s ease',
                 '&:hover': {
-                  backgroundColor: 'rgba(167, 243, 208, 0.1)',
+                  backgroundColor: theme.palette.mode === "light" ? "rgba(16, 185, 129, 0.08)" : "rgba(167, 243, 208, 0.1)",
                   transform: 'translateX(4px)',
                 },
               }}
             >
-              <Typography sx={{ fontWeight: 500, color: '#E5E7EB' }}>Profile</Typography>
+              <Typography sx={{ fontWeight: 500, color: "text.primary" }}>Profile</Typography>
             </MenuItem>
             <MenuItem 
               onClick={logoutHandler}
@@ -219,12 +221,12 @@ const Topbar = ({ handleDrawerToggle }) => {
                 my: 0.5,
                 transition: 'all 0.3s ease',
                 '&:hover': {
-                  backgroundColor: 'rgba(252, 165, 165, 0.1)',
+                  backgroundColor: theme.palette.mode === "light" ? "rgba(239, 68, 68, 0.08)" : "rgba(252, 165, 165, 0.1)",
                   transform: 'translateX(4px)',
                 },
               }}
             >
-              <Typography sx={{ fontWeight: 500, color: '#FCA5A5' }}>LogOut</Typography>
+              <Typography sx={{ fontWeight: 500, color: theme.palette.mode === "light" ? "#DC2626" : "#FCA5A5" }}>LogOut</Typography>
             </MenuItem>
           </Menu>
         </Box>

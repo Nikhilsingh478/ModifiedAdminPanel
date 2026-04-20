@@ -20,6 +20,51 @@ import {
 } from "../../../redux/actions/admin/ManageKeywordAction";
 import toast, { Toaster } from "react-hot-toast";
 
+const adminActionButtonSx = {
+  background: "linear-gradient(135deg, #10B981 0%, #059669 100%)",
+  color: "#ffffff",
+  fontWeight: 600,
+  padding: "8px 18px",
+  borderRadius: "10px",
+  textTransform: "none",
+  fontSize: "0.875rem",
+  minWidth: "128px",
+  boxShadow: "0 6px 16px -10px rgba(5, 150, 105, 0.7)",
+  transition: "background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease",
+  "&:hover": {
+    background: "linear-gradient(135deg, #059669 0%, #047857 100%)",
+    boxShadow: "0 10px 22px -12px rgba(4, 120, 87, 0.75)",
+    transform: "translateY(-1px)",
+  },
+  "&:active": {
+    transform: "translateY(0)",
+    boxShadow: "0 6px 16px -12px rgba(4, 120, 87, 0.7)",
+  },
+};
+
+const adminSubmitButtonSx = {
+  mt: 2,
+  mb: 4,
+  background: "linear-gradient(135deg, #10B981 0%, #059669 100%)",
+  color: "#ffffff",
+  fontWeight: 600,
+  padding: "10px",
+  borderRadius: "10px",
+  textTransform: "none",
+  fontSize: "0.875rem",
+  boxShadow: "0 6px 16px -10px rgba(5, 150, 105, 0.7)",
+  transition: "background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease",
+  "&:hover": {
+    background: "linear-gradient(135deg, #059669 0%, #047857 100%)",
+    boxShadow: "0 10px 22px -12px rgba(4, 120, 87, 0.75)",
+    transform: "translateY(-1px)",
+  },
+  "&:active": {
+    transform: "translateY(0)",
+    boxShadow: "0 6px 16px -12px rgba(4, 120, 87, 0.7)",
+  },
+};
+
 const AddKeywords = () => {
 
     const dispatch = useDispatch();
@@ -73,7 +118,7 @@ const AddKeywords = () => {
 
   return (
     <>
-        <div className="add-button-subHeader" style={{ border: 'none', outline: 'none', boxShadow: 'none' }}>
+        <div className="add-button-subHeader">
         <Toolbar>
           <Typography
             sx={{ flex: "1 1 100%", display: 'flex', alignItems: 'center', gap: '24px' }}
@@ -95,46 +140,7 @@ const AddKeywords = () => {
               variant="contained"
               onClick={openPrimaryCategoryDialog}
               startIcon={<AddIcon />}
-              sx={{
-                background: '#1976d2',
-                color: 'white',
-                fontWeight: 500,
-                padding: '8px 20px',
-                borderRadius: '6px',
-                textTransform: 'none',
-                fontSize: '0.875rem',
-                minWidth: '120px',
-                border: 'none !important',
-                outline: 'none !important',
-                boxShadow: 'none !important',
-                '& .MuiButton-root': {
-                  border: 'none !important',
-                },
-                '& .MuiOutlinedInput-root': {
-                  border: 'none !important',
-                },
-                transition: 'background-color 0.2s ease',
-                '&:hover': {
-                  background: '#1565c0',
-                  border: 'none !important',
-                  boxShadow: 'none !important',
-                },
-                '&:active': {
-                  background: '#0d47a1',
-                  border: 'none !important',
-                  boxShadow: 'none !important',
-                },
-                '&:focus': {
-                  outline: 'none !important',
-                  boxShadow: 'none !important',
-                  border: 'none !important',
-                },
-                '&:focus-visible': {
-                  outline: 'none !important',
-                  boxShadow: 'none !important',
-                  border: 'none !important',
-                }
-              }}
+              sx={adminActionButtonSx}
             >
               Keywords
             </Button>
@@ -183,31 +189,7 @@ const AddKeywords = () => {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ 
-                mt: 2, 
-                mb: 4,
-                background: '#f57c00',
-                color: 'white',
-                fontWeight: 500,
-                padding: '10px',
-                borderRadius: '6px',
-                textTransform: 'none',
-                fontSize: '0.875rem',
-                border: 'none',
-                outline: 'none',
-                boxShadow: 'none',
-                transition: 'background-color 0.2s ease',
-                '&:hover': {
-                  background: '#e65100',
-                },
-                '&:active': {
-                  background: '#e65100',
-                },
-                '&:focus': {
-                  outline: 'none',
-                  boxShadow: 'none',
-                }
-              }}
+              sx={adminSubmitButtonSx}
             >
               Add Keywords
             </Button>

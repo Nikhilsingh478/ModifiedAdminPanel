@@ -163,11 +163,40 @@ textarea:focus-visible {
 
 .add-button-subHeader {
   margin-top: -31px;
-  border: 1px solid rgba(30, 58, 138, 0.2);
-  width: 99%;
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.8);
-  backdrop-filter: blur(8px);
+  border: none;
+  width: 100%;
+  border-radius: 0;
+  background: transparent;
+  backdrop-filter: none;
+  box-shadow: none;
+}
+
+@media (max-width: 900px) {
+  .add-button-subHeader {
+    margin-top: -12px;
+  }
+
+  .add-button-subHeader .MuiToolbar-root {
+    min-height: auto;
+    padding-left: 0;
+    padding-right: 0;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .add-button-subHeader #tableTitle {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+
+  .add-button-subHeader .MuiButton-root {
+    min-height: 36px;
+    padding: 7px 14px;
+    border-radius: 9px;
+    font-size: 0.78rem;
+  }
 }
 
 .deactive {

@@ -20,6 +20,52 @@ import {
 } from "../../../redux/actions/admin/hsnCodeAction";
 import { useHistory } from "react-router-dom";
 
+const adminActionButtonSx = {
+  background: "linear-gradient(135deg, #10B981 0%, #059669 100%)",
+  color: "#ffffff",
+  fontWeight: 600,
+  padding: "8px 18px",
+  borderRadius: "10px",
+  textTransform: "none",
+  fontSize: "0.875rem",
+  minWidth: "140px",
+  whiteSpace: "nowrap",
+  boxShadow: "0 6px 16px -10px rgba(5, 150, 105, 0.7)",
+  transition: "background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease",
+  "&:hover": {
+    background: "linear-gradient(135deg, #059669 0%, #047857 100%)",
+    boxShadow: "0 10px 22px -12px rgba(4, 120, 87, 0.75)",
+    transform: "translateY(-1px)",
+  },
+  "&:active": {
+    transform: "translateY(0)",
+    boxShadow: "0 6px 16px -12px rgba(4, 120, 87, 0.7)",
+  },
+};
+
+const adminSubmitButtonSx = {
+  mt: 1,
+  mb: 1,
+  background: "linear-gradient(135deg, #10B981 0%, #059669 100%)",
+  color: "#ffffff",
+  fontWeight: 600,
+  padding: "10px",
+  borderRadius: "10px",
+  textTransform: "none",
+  fontSize: "0.875rem",
+  boxShadow: "0 6px 16px -10px rgba(5, 150, 105, 0.7)",
+  transition: "background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease",
+  "&:hover": {
+    background: "linear-gradient(135deg, #059669 0%, #047857 100%)",
+    boxShadow: "0 10px 22px -12px rgba(4, 120, 87, 0.75)",
+    transform: "translateY(-1px)",
+  },
+  "&:active": {
+    transform: "translateY(0)",
+    boxShadow: "0 6px 16px -12px rgba(4, 120, 87, 0.7)",
+  },
+};
+
 const AddHSNcode = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -73,7 +119,7 @@ const AddHSNcode = () => {
 
   return (
     <>
-      <div className="add-button-subHeader" style={{ border: 'none', outline: 'none', boxShadow: 'none' }}>
+      <div className="add-button-subHeader">
         <Toolbar>
           <Typography
             sx={{ flex: "1 1 100%", display: 'flex', alignItems: 'center', gap: '24px' }}
@@ -95,47 +141,7 @@ const AddHSNcode = () => {
               variant="contained"
               onClick={openHSNCodeDialog}
               startIcon={<AddIcon />}
-              sx={{
-                background: '#1976d2',
-                color: 'white',
-                fontWeight: 500,
-                padding: '8px 20px',
-                borderRadius: '6px',
-                textTransform: 'none',
-                fontSize: '0.875rem',
-                minWidth: '140px',
-                whiteSpace: 'nowrap',
-                border: 'none !important',
-                outline: 'none !important',
-                boxShadow: 'none !important',
-                '& .MuiButton-root': {
-                  border: 'none !important',
-                },
-                '& .MuiOutlinedInput-root': {
-                  border: 'none !important',
-                },
-                transition: 'background-color 0.2s ease',
-                '&:hover': {
-                  background: '#1565c0',
-                  border: 'none !important',
-                  boxShadow: 'none !important',
-                },
-                '&:active': {
-                  background: '#0d47a1',
-                  border: 'none !important',
-                  boxShadow: 'none !important',
-                },
-                '&:focus': {
-                  outline: 'none !important',
-                  boxShadow: 'none !important',
-                  border: 'none !important',
-                },
-                '&:focus-visible': {
-                  outline: 'none !important',
-                  boxShadow: 'none !important',
-                  border: 'none !important',
-                }
-              }}
+              sx={adminActionButtonSx}
             >
               HSN Code
             </Button>
@@ -184,31 +190,7 @@ const AddHSNcode = () => {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ 
-                mt: 1, 
-                mb: 1,
-                background: '#9c27b0',
-                color: 'white',
-                fontWeight: 500,
-                padding: '10px',
-                borderRadius: '6px',
-                textTransform: 'none',
-                fontSize: '0.875rem',
-                border: 'none',
-                outline: 'none',
-                boxShadow: 'none',
-                transition: 'background-color 0.2s ease',
-                '&:hover': {
-                  background: '#7b1fa2',
-                },
-                '&:active': {
-                  background: '#7b1fa2',
-                },
-                '&:focus': {
-                  outline: 'none',
-                  boxShadow: 'none',
-                }
-              }}
+              sx={adminSubmitButtonSx}
             >
               Add HSN Code
             </Button>

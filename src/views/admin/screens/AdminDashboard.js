@@ -1,5 +1,5 @@
 import React from "react";
-import { Grid, Typography, Box, keyframes, useTheme, Avatar } from "@mui/material";
+import { Grid, Typography, Box, Avatar } from "@mui/material";
 import "./AdminDashboard.css";
 import Layout from "../../../components/layout/Layout";
 import PageHeader from "../../../components/common/PageHeader";
@@ -8,141 +8,68 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import PeopleIcon from "@mui/icons-material/People";
 
-// Animation definitions
-const fadeInUp = keyframes`
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-`;
-
-const fadeInScale = keyframes`
-  from {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-`;
-
-const countUp = keyframes`
-  from {
-    opacity: 0;
-    transform: scale(0.5);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1);
-  }
-`;
-
 const AdminDashboard = () => {
-  const theme = useTheme();
-  
+  const dashboardCards = [
+    {
+      title: "Total Orders",
+      value: "--",
+      icon: <ShoppingCartIcon sx={{ fontSize: { xs: 18, sm: 20 }, color: "white" }} />,
+      gradient: "linear-gradient(135deg, #A7F3D0 0%, #7DD3FC 100%)",
+    },
+    {
+      title: "Total Sales",
+      value: "--",
+      icon: <AttachMoneyIcon sx={{ fontSize: { xs: 18, sm: 20 }, color: "white" }} />,
+      gradient: "linear-gradient(135deg, #C4B5FD 0%, #FCA5A5 100%)",
+    },
+    {
+      title: "Total Customers",
+      value: "--",
+      icon: <PeopleIcon sx={{ fontSize: { xs: 18, sm: 20 }, color: "white" }} />,
+      gradient: "linear-gradient(135deg, #FDE68A 0%, #86EFAC 100%)",
+    },
+  ];
+
   return (
     <Layout>
-      <PageHeader 
-        title="Dashboard" 
-      />
-      <Grid container spacing={3}>
-        <Grid item xs={12} md={6} lg={4}>
-          <Card>
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-              <Avatar
+      <PageHeader title="Dashboard" subtitle="Overview of your storefront performance" />
+      <Grid container spacing={{ xs: 1.5, sm: 2, md: 3 }}>
+        {dashboardCards.map((card) => (
+          <Grid item xs={12} sm={6} lg={4} key={card.title}>
+            <Card
+              sx={{
+                p: { xs: 2, sm: 2.5, md: 3 },
+                borderRadius: { xs: "12px", sm: "16px" },
+              }}
+            >
+              <Box sx={{ display: "flex", alignItems: "center", mb: { xs: 1.25, sm: 1.75 } }}>
+                <Avatar
+                  sx={{
+                    background: card.gradient,
+                    width: { xs: 34, sm: 40 },
+                    height: { xs: 34, sm: 40 },
+                    mr: 1.5,
+                  }}
+                >
+                  {card.icon}
+                </Avatar>
+                <Typography variant="subtitle2" color="textSecondary" sx={{ fontWeight: 600, fontSize: { xs: "0.82rem", sm: "0.88rem" } }}>
+                  {card.title}
+                </Typography>
+              </Box>
+              <Typography
                 sx={{
-                  background: 'linear-gradient(135deg, #A7F3D0 0%, #7DD3FC 100%)',
-                  width: 40,
-                  height: 40,
-                  mr: 2,
+                  fontSize: { xs: "1.5rem", sm: "1.9rem" },
+                  fontWeight: 700,
+                  color: "textPrimary",
+                  lineHeight: 1.2,
                 }}
               >
-                <ShoppingCartIcon sx={{ fontSize: 20, color: 'white' }} />
-              </Avatar>
-              <Typography 
-                variant="subtitle2" 
-                color="textSecondary" 
-                fontWeight={500}
-              >
-                Total Orders
+                {card.value}
               </Typography>
-            </Box>
-            <Typography 
-              variant="h4" 
-              fontWeight={600} 
-              color="textPrimary"
-            >
-              --
-            </Typography>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={6} lg={4}>
-          <Card>
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-              <Avatar
-                sx={{
-                  background: 'linear-gradient(135deg, #C4B5FD 0%, #FCA5A5 100%)',
-                  width: 40,
-                  height: 40,
-                  mr: 2,
-                }}
-              >
-                <AttachMoneyIcon sx={{ fontSize: 20, color: 'white' }} />
-              </Avatar>
-              <Typography 
-                variant="subtitle2" 
-                color="textSecondary" 
-                fontWeight={500}
-              >
-                Total Sales
-              </Typography>
-            </Box>
-            <Typography 
-              variant="h4" 
-              fontWeight={600} 
-              color="textPrimary"
-            >
-              --
-            </Typography>
-          </Card>
-        </Grid>
-
-        <Grid item xs={12} md={6} lg={4}>
-          <Card>
-            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
-              <Avatar
-                sx={{
-                  background: 'linear-gradient(135deg, #FDE68A 0%, #86EFAC 100%)',
-                  width: 40,
-                  height: 40,
-                  mr: 2,
-                }}
-              >
-                <PeopleIcon sx={{ fontSize: 20, color: 'white' }} />
-              </Avatar>
-              <Typography 
-                variant="subtitle2" 
-                color="textSecondary" 
-                fontWeight={500}
-              >
-                Total Customers
-              </Typography>
-            </Box>
-            <Typography 
-              variant="h4" 
-              fontWeight={600} 
-              color="textPrimary"
-            >
-              --
-            </Typography>
-          </Card>
-        </Grid>
+            </Card>
+          </Grid>
+        ))}
       </Grid>
     </Layout>
   );

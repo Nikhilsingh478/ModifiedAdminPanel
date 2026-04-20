@@ -6,9 +6,9 @@ export const ColorModeContext = createContext({ toggleColorMode: () => {} });
 
 export const CustomThemeProvider = ({ children }) => {
   const [mode, setMode] = useState(() => {
-    // Get saved theme from localStorage or default to 'light'
+    // Get saved theme from localStorage or default to dark mode.
     const savedMode = localStorage.getItem('themeMode');
-    return savedMode || 'light';
+    return savedMode || 'dark';
   });
 
   const colorMode = useMemo(
@@ -25,6 +25,8 @@ export const CustomThemeProvider = ({ children }) => {
   // Save theme mode to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem('themeMode', mode);
+    document.body.classList.toggle("dark", mode === "dark");
+    document.body.classList.toggle("light", mode === "light");
   }, [mode]);
 
   return (

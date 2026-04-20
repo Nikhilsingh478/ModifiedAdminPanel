@@ -14,9 +14,10 @@ import { useHistory } from "react-router-dom";
 
 
 const Search = styled("Box")(({ theme }) => ({
-  backgroundColor: "#f2f2f2",
+  backgroundColor: "#1B1F26",
   padding: "0 10px",
   borderRadius: theme.shape.borderRadius,
+  border: "1px solid #2A2F3A",
   width: "30%",
   margin: "8px",
 }));

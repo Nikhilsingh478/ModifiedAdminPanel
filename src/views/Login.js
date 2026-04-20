@@ -36,12 +36,22 @@ const GlassBackground = styled('div')({
     right: 0,
     bottom: 0,
     background: 'radial-gradient(circle at 20% 50%, rgba(167, 243, 208, 0.1) 0%, transparent 50%), radial-gradient(circle at 80% 50%, rgba(125, 211, 252, 0.1) 0%, transparent 50%), radial-gradient(circle at 50% 20%, rgba(196, 181, 253, 0.05) 0%, transparent 50%)',
-    animation: 'float 20s ease-in-out infinite',
+    animation: 'ambientShift 18s ease-in-out infinite',
   },
-  '@keyframes float': {
-    '0%, 100%': { transform: 'translate(0, 0) rotate(0deg)' },
-    '33%': { transform: 'translate(20px, -20px) rotate(120deg)' },
-    '66%': { transform: 'translate(-20px, 10px) rotate(240deg)' },
+  '&::after': {
+    content: '""',
+    position: 'absolute',
+    inset: 0,
+    background: 'linear-gradient(110deg, rgba(167, 243, 208, 0.05) 0%, rgba(125, 211, 252, 0.03) 45%, rgba(196, 181, 253, 0.04) 100%)',
+    animation: 'ambientPulse 10s ease-in-out infinite',
+  },
+  '@keyframes ambientShift': {
+    '0%, 100%': { transform: 'translate3d(0, 0, 0)', opacity: 0.95 },
+    '50%': { transform: 'translate3d(-10px, 8px, 0)', opacity: 1 },
+  },
+  '@keyframes ambientPulse': {
+    '0%, 100%': { opacity: 0.45 },
+    '50%': { opacity: 0.7 },
   },
 });
 
@@ -76,6 +86,17 @@ const GlassCard = styled(Paper)(({ theme }) => ({
     bottom: 0,
     background: 'radial-gradient(circle at 50% 0%, rgba(167, 243, 208, 0.1) 0%, transparent 70%)',
     pointerEvents: 'none',
+  },
+  animation: 'cardReveal 420ms ease-out',
+  '@keyframes cardReveal': {
+    from: {
+      opacity: 0,
+      transform: 'translateY(8px)',
+    },
+    to: {
+      opacity: 1,
+      transform: 'translateY(0)',
+    },
   },
 }));
 
@@ -258,8 +279,8 @@ const Login = () => {
                 border: 'none',
                 '&:hover': {
                   background: 'linear-gradient(135deg, #7DD3FC 0%, #A7F3D0 100%)',
-                  transform: 'translateY(-2px)',
-                  boxShadow: '0 12px 24px rgba(167, 243, 208, 0.4)',
+                  transform: 'translateY(-1px)',
+                  boxShadow: '0 8px 18px rgba(167, 243, 208, 0.25)',
                 },
               }}
             >

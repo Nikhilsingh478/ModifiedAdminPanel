@@ -252,7 +252,8 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, drawerWidth }) => {
           display: { xs: 'block', md: 'none' },
           '& .MuiDrawer-paper': { 
             boxSizing: 'border-box', 
-            width: drawerWidth,
+            width: '84vw',
+            maxWidth: 300,
             transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
           },
         }}

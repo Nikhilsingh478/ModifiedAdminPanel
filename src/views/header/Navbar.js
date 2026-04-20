@@ -31,9 +31,10 @@ import InputBase from "@mui/material/InputBase";
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
   borderRadius: theme.shape.borderRadius,
-  backgroundColor: "#f2f2f2",
+  backgroundColor: "#1B1F26",
+  border: "1px solid #2A2F3A",
   "&:hover": {
-    backgroundColor: alpha(theme.palette.common.white, 0.25),
+    backgroundColor: "#232833",
   },
   marginRight: theme.spacing(2),
   marginLeft: 0,
