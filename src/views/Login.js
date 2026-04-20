@@ -228,6 +228,18 @@ const Login = () => {
                     color: '#E5E7EB',
                   },
                 },
+                '& .MuiOutlinedInput-root': {
+                  backgroundColor: '#1B1F26',
+                  '& fieldset': {
+                    borderColor: '#4B5563',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: '#6B7280',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#A7F3D0',
+                  },
+                },
                 '& .MuiInputBase-input': {
                   color: '#E5E7EB',
                 },
@@ -250,6 +262,18 @@ const Login = () => {
                   color: '#9CA3AF',
                   '&.Mui-focused': {
                     color: '#E5E7EB',
+                  },
+                },
+                '& .MuiOutlinedInput-root': {
+                  backgroundColor: '#1B1F26',
+                  '& fieldset': {
+                    borderColor: '#4B5563',
+                  },
+                  '&:hover fieldset': {
+                    borderColor: '#6B7280',
+                  },
+                  '&.Mui-focused fieldset': {
+                    borderColor: '#A7F3D0',
                   },
                 },
                 '& .MuiInputBase-input': {
