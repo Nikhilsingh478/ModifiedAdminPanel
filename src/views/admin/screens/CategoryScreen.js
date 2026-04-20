@@ -126,7 +126,7 @@ const CategoryScreen = () => {
           );
           if (col.field === "createdDateTime") return formatDate(row.createdDateTime);
           if (col.field === "action") return (
-            <IconButton aria-label="edit" color="primary">
+            <IconButton aria-label="edit" sx={{ color: '#A7F3D0' }}>
               <EditIcon
                 onClick={() => openModel(row.primaryCategory.id, row.primaryCategory.primaryCategoryName)}
               />

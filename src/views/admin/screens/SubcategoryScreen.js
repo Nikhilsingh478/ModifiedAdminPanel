@@ -126,7 +126,7 @@ const SubcategoryScreen = () => {
           if (col.field === "createdDateTime") return formatDate(row.createdDateTime);
           if (col.field === "status") return <StatusBadge status={row.isActive === 1 ? "Active" : "Deactive"} />;
           if (col.field === "action") return (
-            <IconButton aria-label="edit" color="primary">
+            <IconButton aria-label="edit" sx={{ color: '#A7F3D0' }}>
               <EditIcon onClick={() => openModel(row.subCategory.id, row.subCategory.subCategoryName, row.subCategory.keyword.id)} />
             </IconButton>
           );

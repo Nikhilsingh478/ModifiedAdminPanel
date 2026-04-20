@@ -112,7 +112,7 @@ const ManageProducts = () => {
           );
           if (col.field === "brandName") return row.product.brand.brandName;
           if (col.field === "action") return (
-            <IconButton aria-label="edit" color="primary">
+            <IconButton aria-label="edit" sx={{ color: '#A7F3D0' }}>
               <EditIcon onClick={() => openModel(row.product.id, row.product.productName, row.product.brand.id, row.product.keyword.id, row.product.hsn.id)} />
             </IconButton>
           );

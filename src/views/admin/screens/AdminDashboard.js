@@ -1,9 +1,12 @@
 import React from "react";
-import { Grid, Typography, Box, keyframes } from "@mui/material";
+import { Grid, Typography, Box, keyframes, useTheme, Avatar } from "@mui/material";
 import "./AdminDashboard.css";
 import Layout from "../../../components/layout/Layout";
 import PageHeader from "../../../components/common/PageHeader";
 import Card from "../../../components/common/Card";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
+import PeopleIcon from "@mui/icons-material/People";
 
 // Animation definitions
 const fadeInUp = keyframes`
@@ -40,137 +43,104 @@ const countUp = keyframes`
 `;
 
 const AdminDashboard = () => {
+  const theme = useTheme();
+  
   return (
     <Layout>
-      <PageHeader title="Dashboard" />
+      <PageHeader 
+        title="Dashboard" 
+      />
       <Grid container spacing={3}>
         <Grid item xs={12} md={6} lg={4}>
-          <Card
-            sx={{
-              animation: `${fadeInUp} 0.6s ease-out`,
-              transition: 'all 0.3s ease',
-              '&:hover': {
-                transform: 'translateY(-4px)',
-                boxShadow: 3
-              }
-            }}
-          >
+          <Card>
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+              <Avatar
+                sx={{
+                  background: 'linear-gradient(135deg, #A7F3D0 0%, #7DD3FC 100%)',
+                  width: 40,
+                  height: 40,
+                  mr: 2,
+                }}
+              >
+                <ShoppingCartIcon sx={{ fontSize: 20, color: 'white' }} />
+              </Avatar>
+              <Typography 
+                variant="subtitle2" 
+                color="textSecondary" 
+                fontWeight={500}
+              >
+                Total Orders
+              </Typography>
+            </Box>
             <Typography 
-              variant="subtitle1" 
-              color="textSecondary" 
-              gutterBottom 
+              variant="h4" 
               fontWeight={600} 
-              textTransform="uppercase" 
-              fontSize="0.75rem" 
-              letterSpacing="0.05em"
-              sx={{ animation: `${fadeInUp} 0.8s ease-out` }}
+              color="textPrimary"
             >
-              Total Orders
+              --
             </Typography>
-            <Typography 
-              variant="h3" 
-              fontWeight={700} 
-              color="primary.main" 
-              my={1}
-              sx={{ 
-                animation: `${countUp} 1s ease-out`,
-                background: 'linear-gradient(45deg, primary.main, primary.dark)',
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent'
-              }}
-            >
-              24
-            </Typography>
-            <Box sx={{ mt: 2, height: 4, bgcolor: 'primary.main', borderRadius: 2, width: '60%', animation: `${fadeInScale} 1.2s ease-out` }} />
           </Card>
         </Grid>
 
         <Grid item xs={12} md={6} lg={4}>
-          <Card
-            sx={{
-              animation: `${fadeInUp} 0.6s ease-out 0.1s`,
-              animationFillMode: 'both',
-              transition: 'all 0.3s ease',
-              '&:hover': {
-                transform: 'translateY(-4px)',
-                boxShadow: 3
-              }
-            }}
-          >
+          <Card>
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+              <Avatar
+                sx={{
+                  background: 'linear-gradient(135deg, #C4B5FD 0%, #FCA5A5 100%)',
+                  width: 40,
+                  height: 40,
+                  mr: 2,
+                }}
+              >
+                <AttachMoneyIcon sx={{ fontSize: 20, color: 'white' }} />
+              </Avatar>
+              <Typography 
+                variant="subtitle2" 
+                color="textSecondary" 
+                fontWeight={500}
+              >
+                Total Sales
+              </Typography>
+            </Box>
             <Typography 
-              variant="subtitle1" 
-              color="textSecondary" 
-              gutterBottom 
+              variant="h4" 
               fontWeight={600} 
-              textTransform="uppercase" 
-              fontSize="0.75rem" 
-              letterSpacing="0.05em"
-              sx={{ animation: `${fadeInUp} 0.8s ease-out 0.1s`, animationFillMode: 'both' }}
+              color="textPrimary"
             >
-              Total Sales
+              --
             </Typography>
-            <Typography 
-              variant="h3" 
-              fontWeight={700} 
-              color="secondary.main" 
-              my={1}
-              sx={{ 
-                animation: `${countUp} 1s ease-out 0.1s`,
-                animationFillMode: 'both',
-                background: 'linear-gradient(45deg, secondary.main, secondary.dark)',
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent'
-              }}
-            >
-              24
-            </Typography>
-            <Box sx={{ mt: 2, height: 4, bgcolor: 'secondary.main', borderRadius: 2, width: '75%', animation: `${fadeInScale} 1.2s ease-out 0.1s`, animationFillMode: 'both' }} />
           </Card>
         </Grid>
 
         <Grid item xs={12} md={6} lg={4}>
-          <Card
-            sx={{
-              animation: `${fadeInUp} 0.6s ease-out 0.2s`,
-              animationFillMode: 'both',
-              transition: 'all 0.3s ease',
-              '&:hover': {
-                transform: 'translateY(-4px)',
-                boxShadow: 3
-              }
-            }}
-          >
+          <Card>
+            <Box sx={{ display: 'flex', alignItems: 'center', mb: 2 }}>
+              <Avatar
+                sx={{
+                  background: 'linear-gradient(135deg, #FDE68A 0%, #86EFAC 100%)',
+                  width: 40,
+                  height: 40,
+                  mr: 2,
+                }}
+              >
+                <PeopleIcon sx={{ fontSize: 20, color: 'white' }} />
+              </Avatar>
+              <Typography 
+                variant="subtitle2" 
+                color="textSecondary" 
+                fontWeight={500}
+              >
+                Total Customers
+              </Typography>
+            </Box>
             <Typography 
-              variant="subtitle1" 
-              color="textSecondary" 
-              gutterBottom 
+              variant="h4" 
               fontWeight={600} 
-              textTransform="uppercase" 
-              fontSize="0.75rem" 
-              letterSpacing="0.05em"
-              sx={{ animation: `${fadeInUp} 0.8s ease-out 0.2s`, animationFillMode: 'both' }}
+              color="textPrimary"
             >
-              Total Customers
+              --
             </Typography>
-            <Typography 
-              variant="h3" 
-              fontWeight={700} 
-              color="text.primary" 
-              my={1}
-              sx={{ 
-                animation: `${countUp} 1s ease-out 0.2s`,
-                animationFillMode: 'both',
-                background: 'linear-gradient(45deg, text.primary, text.secondary)',
-                backgroundClip: 'text',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent'
-              }}
-            >
-              24
-            </Typography>
-            <Box sx={{ mt: 2, height: 4, bgcolor: 'text.primary', borderRadius: 2, width: '45%', animation: `${fadeInScale} 1.2s ease-out 0.2s`, animationFillMode: 'both' }} />
           </Card>
         </Grid>
       </Grid>

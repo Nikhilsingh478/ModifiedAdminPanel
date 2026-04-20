@@ -127,7 +127,7 @@ const ManageSubProduct = () => {
           if (col.field === "gst") return `${row.subProduct.gst}%`;
           if (col.field === "discount") return `${row.subProduct.discountPercent}%`;
           if (col.field === "action") return (
-            <IconButton aria-label="edit" color="primary">
+            <IconButton aria-label="edit" sx={{ color: '#A7F3D0' }}>
               <ModeEditIcon onClick={() => openModel(
                 row.subProduct.id, row.subProduct.subProductName, row.subProduct.buyingPrice,
                 row.subProduct.sellingPrice, row.subProduct.gst, row.subProduct.discountPercent,

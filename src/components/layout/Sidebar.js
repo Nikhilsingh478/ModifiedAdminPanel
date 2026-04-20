@@ -10,6 +10,7 @@ import {
   Divider,
   keyframes,
   IconButton,
+  useTheme,
 } from "@mui/material";
 import CategoryIcon from "@mui/icons-material/Category";
 import AddIcon from "@mui/icons-material/Add";
@@ -55,6 +56,7 @@ export const sidebarNavigationData = [
 
 const Sidebar = ({ mobileOpen, handleDrawerToggle, drawerWidth }) => {
   const location = useLocation();
+  const theme = useTheme();
   const [hasAnimated, setHasAnimated] = useState(() => {
     // Check if animations have already run in this session
     return sessionStorage.getItem('sidebarAnimated') === 'true';
@@ -200,62 +202,36 @@ const Sidebar = ({ mobileOpen, handleDrawerToggle, drawerWidth }) => {
             }}
             selected={location.pathname.startsWith(item.to)}
             sx={{
-              margin: '4px 12px',
-              borderRadius: '8px',
-              padding: '10px 16px',
-              transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
-              // Only animate on initial load
-              animation: !hasAnimated ? `${slideInLeft} 0.4s ease-out ${item.id * 0.1}s` : 'none',
-              animationFillMode: !hasAnimated ? 'both' : 'none',
+              margin: '2px 8px',
+              borderRadius: '4px',
+              padding: '8px 12px',
+              transition: 'all 0.2s ease',
               position: 'relative',
-              overflow: 'hidden',
-              '&::before': {
-                content: '""',
-                position: 'absolute',
-                left: 0,
-                top: 0,
-                height: '100%',
-                width: '3px',
-                background: 'linear-gradient(180deg, primary.main, secondary.main)',
-                transform: 'translateX(-100%)',
-                transition: 'transform 0.3s ease',
-              },
               "&.Mui-selected": {
-                backgroundColor: "rgba(59, 130, 246, 0.1)",
-                color: "#3b82f6",
-                fontWeight: 600,
-                transform: 'translateX(4px)',
+                backgroundColor: 'rgba(167, 243, 208, 0.16)',
+                color: '#A7F3D0',
+                fontWeight: 500,
                 "& .MuiListItemIcon-root": {
-                  color: "#3b82f6",
-                  transform: 'scale(1.1)',
+                  color: '#A7F3D0',
                 },
-                '&::before': {
-                  transform: 'translateX(0)',
-                }
               },
               "&:hover": {
-                backgroundColor: "rgba(59, 130, 246, 0.05)",
-                transform: 'translateX(2px)',
-                "& .MuiListItemIcon-root": {
-                  transform: 'scale(1.05)',
-                }
+                backgroundColor: 'rgba(167, 243, 208, 0.08)',
               }
             }}
           >
             <ListItemIcon 
               sx={{ 
-                minWidth: "40px", 
-                color: location.pathname.startsWith(item.to) ? "#3b82f6" : "#64748b",
-                transition: 'all 0.3s ease'
+                minWidth: "32px", 
+                color: location.pathname.startsWith(item.to) ? '#A7F3D0' : '#4B5563',
               }}
             >
               {item.icon}
             </ListItemIcon>
             <ListItemText 
               primaryTypographyProps={{ 
-                fontSize: '0.9rem', 
-                fontWeight: location.pathname.startsWith(item.to) ? 600 : 500,
-                transition: 'all 0.3s ease'
+                fontSize: '0.875rem', 
+                fontWeight: location.pathname.startsWith(item.to) ? 500 : 400,
               }} 
               primary={item.label} 
             />

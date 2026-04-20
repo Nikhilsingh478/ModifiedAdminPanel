@@ -25,9 +25,9 @@ import { ColorModeContext } from "../../ThemeContext";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
-  borderRadius: '8px',
-  backgroundColor: theme.palette.mode === 'light' ? "#ffffff" : "#171717",
-  border: `1px solid ${theme.palette.mode === 'light' ? '#e2e8f0' : '#262626'}`,
+  borderRadius: '6px',
+  backgroundColor: '#1B1F26',
+  border: '1px solid #2A2F3A',
   marginRight: theme.spacing(2),
   width: "100%",
   [theme.breakpoints.up("sm")]: {
@@ -36,17 +36,26 @@ const Search = styled("div")(({ theme }) => ({
   },
   display: "flex",
   alignItems: "center",
+  transition: 'all 0.2s ease',
+  '&:focus-within': {
+    borderColor: '#A7F3D0',
+  },
 }));
 
 const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
+  color: '#E5E7EB',
   "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    paddingLeft: `calc(1em + ${theme.spacing(1)})`,
+    padding: theme.spacing(1.2, 1.2, 1.2, 0),
+    paddingLeft: `calc(1em + ${theme.spacing(1.5)})`,
     transition: theme.transitions.create("width"),
     width: "100%",
+    fontSize: '0.9rem',
     [theme.breakpoints.up("md")]: {
-      width: "20ch",
+      width: "24ch",
+    },
+    '&::placeholder': {
+      color: '#9CA3AF',
+      opacity: 0.7,
     },
   },
 }));
@@ -70,11 +79,10 @@ const Topbar = ({ handleDrawerToggle }) => {
       position="static"
       elevation={0}
       sx={{
-        bgcolor: "background.paper",
-        color: "text.primary",
-        borderBottom: 1,
-        borderColor: "divider",
-        zIndex: 1,
+        bgcolor: '#15181D',
+        color: '#E5E7EB',
+        borderBottom: '1px solid #2A2F3A',
+        zIndex: 1100,
       }}
     >
       <Toolbar>
@@ -131,54 +139,38 @@ const Topbar = ({ handleDrawerToggle }) => {
 
         <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
           <IconButton 
-          sx={{ 
-            ml: 1, 
-            transition: 'all 0.2s ease',
-            '&:hover': {
-              transform: 'scale(1.1)',
-              backgroundColor: 'action.hover'
-            }
-          }} 
-          onClick={colorMode.toggleColorMode} 
-          color="inherit"
-        >
-          {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
-        </IconButton>
+            onClick={colorMode.toggleColorMode} 
+            color="inherit"
+            sx={{ 
+              ml: 1, 
+            }} 
+          >
+            {theme.palette.mode === 'dark' ? <Brightness7Icon /> : <Brightness4Icon />}
+          </IconButton>
 
           <IconButton 
-          color="inherit"
-          sx={{
-            transition: 'all 0.2s ease',
-            '&:hover': {
-              transform: 'scale(1.1)',
-              backgroundColor: 'action.hover'
-            }
-          }}
-        >
-          <Badge badgeContent={0} color="error">
-            <NotificationsIcon style={{ color: theme.palette.mode === 'light' ? "#64748b" : "#a3a3a3" }} />
-          </Badge>
-        </IconButton>
+            color="inherit"
+          >
+            <Badge 
+              badgeContent={0} 
+              color="error"
+            >
+              <NotificationsIcon />
+            </Badge>
+          </IconButton>
 
           <IconButton 
             onClick={handleMenu} 
             color="inherit" 
             sx={{ 
               p: 0.5,
-              transition: 'all 0.2s ease',
-              '&:hover': {
-                transform: 'scale(1.05)',
-                backgroundColor: 'action.hover'
-              }
             }}
           >
             <Avatar 
               src="/images/cropped_circle_image.webp" 
               sx={{ 
-                width: 36, 
-                height: 36, 
-                border: `2px solid ${theme.palette.primary.main}`,
-                transition: 'all 0.2s ease'
+                width: 32, 
+                height: 32, 
               }} 
             />
           </IconButton>
@@ -189,9 +181,51 @@ const Topbar = ({ handleDrawerToggle }) => {
             transformOrigin={{ vertical: "top", horizontal: "right" }}
             open={Boolean(anchorEl)}
             onClose={handleClose}
+            PaperProps={{
+              sx: {
+                mt: 1.5,
+                borderRadius: '16px',
+                background: 'rgba(27, 31, 38, 0.95)',
+                backdropFilter: 'blur(20px)',
+                border: '1px solid #2A2F3A',
+                boxShadow: '0 8px 32px rgba(0, 0, 0, 0.4)',
+                minWidth: 180,
+                '& .MuiList-root': {
+                  padding: '8px',
+                },
+              }
+            }}
           >
-            <MenuItem onClick={handleClose}>Profile</MenuItem>
-            <MenuItem onClick={logoutHandler}>LogOut</MenuItem>
+            <MenuItem 
+              onClick={handleClose}
+              sx={{
+                borderRadius: '12px',
+                mx: 1,
+                my: 0.5,
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  backgroundColor: 'rgba(167, 243, 208, 0.1)',
+                  transform: 'translateX(4px)',
+                },
+              }}
+            >
+              <Typography sx={{ fontWeight: 500, color: '#E5E7EB' }}>Profile</Typography>
+            </MenuItem>
+            <MenuItem 
+              onClick={logoutHandler}
+              sx={{
+                borderRadius: '12px',
+                mx: 1,
+                my: 0.5,
+                transition: 'all 0.3s ease',
+                '&:hover': {
+                  backgroundColor: 'rgba(252, 165, 165, 0.1)',
+                  transform: 'translateX(4px)',
+                },
+              }}
+            >
+              <Typography sx={{ fontWeight: 500, color: '#FCA5A5' }}>LogOut</Typography>
+            </MenuItem>
           </Menu>
         </Box>
       </Toolbar>
